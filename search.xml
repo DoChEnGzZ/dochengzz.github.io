@@ -69,10 +69,10 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num,mod,count;</span><br><span class="line">  <span class="comment">//核心思想除2取余得二进制结果</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;num)&#123;</span><br><span class="line">        count=<span class="number">0</span>;</span><br><span class="line">      <span class="comment">//用数组存储除2取余的结果</span></span><br><span class="line">        <span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line">      <span class="comment">//如果输入数据为1则直接输出</span></span><br><span class="line">        <span class="keyword">if</span>(num==<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="number">1</span>;</span><br><span class="line">      <span class="comment">//循环除2取余</span></span><br><span class="line">        <span class="keyword">while</span>(num!=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            a[count++]=num%<span class="number">2</span>;</span><br><span class="line">            num=num/<span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="comment">//逆序输出，为二进制结果</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=count<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>“考研复试机试”</category>
+        <category>考研复试机试</category>
       </categories>
       <tags>
-        <tag>“算法”</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -80,10 +80,10 @@
     <url>/2021/01/30/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h2 id="1-使用github的仓库提供服务器"><a href="#1-使用github的仓库提供服务器" class="headerlink" title="1 使用github的仓库提供服务器"></a>1 使用github的仓库提供服务器</h2>]]></content>
       <categories>
-        <category>“hexo”</category>
+        <category>hexo</category>
       </categories>
       <tags>
-        <tag>“hexo”</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
