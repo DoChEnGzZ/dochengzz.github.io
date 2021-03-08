@@ -152,4 +152,29 @@
         <tag>hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>快速排序</title>
+    <url>/2021/03/08/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p>快速排序是C.R.A.Hoare于1962年提出的一种划分交换排序。它采用了一种分治的策略，通常称其为分治法(Divide-and-ConquerMethod)。</p>
+<p>该方法的基本思想是：</p>
+<ul>
+<li><p>1．先从数列中取出一个数作为基准数。</p>
+</li>
+<li><p>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。</p>
+</li>
+<li><p>3．再对左右区间重复第二步，直到各区间只有一个数。  </p>
+</li>
+</ul>
+<p>快速排序利用分治法，时间复杂度为O(logn)，不稳定，原序列越混乱越排序所花时间越多。</p>
+<a id="more"></a>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>* a,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span>(low&gt;=high)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">//将数组的第一个元素作为基准元素flag</span></span><br><span class="line">  <span class="comment">//一趟排序完让比flag大的元素位于flag左边，比flag小的元素位于flag右边</span></span><br><span class="line">    <span class="keyword">int</span> flag=a[low];</span><br><span class="line">    <span class="keyword">int</span> i=low,j=high;</span><br><span class="line">    <span class="keyword">while</span>(j&gt;i)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">//每次找到左边一个比flag大的元素，右边一个比flag小的元素</span></span><br><span class="line">        <span class="keyword">while</span>(a[j]&gt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            j--;</span><br><span class="line">        <span class="keyword">while</span>(a[i]&lt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            i++;</span><br><span class="line">      <span class="comment">//将二者交换</span></span><br><span class="line">        <span class="keyword">if</span>(j&gt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            swap(a[i],a[j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">//将基准元素flag放到中间，实质是一次交换</span></span><br><span class="line">    <span class="keyword">int</span> temp=a[i];</span><br><span class="line">    a[i]=flag;</span><br><span class="line">    a[low]=temp;</span><br><span class="line">  <span class="comment">//对左边和右边进行递归</span></span><br><span class="line">    quickSort(a,low,i<span class="number">-1</span>);</span><br><span class="line">    quickSort(a,i+<span class="number">1</span>,high);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
 </search>
