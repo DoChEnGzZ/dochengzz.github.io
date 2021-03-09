@@ -199,7 +199,36 @@
 <h2 id="堆排序的过程"><a href="#堆排序的过程" class="headerlink" title="堆排序的过程"></a>堆排序的过程</h2><p>先了解下<strong>堆排序</strong>的基本思想：</p>
 <p>将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值，</p>
 <p>如此反复执行，便能得到一个有序序列了，建立最大堆时是从<strong>最后一个非叶子节点</strong>开始从下往上调整的（对应到数组中即是n/2的位置，真好为第一个非叶子结点）。</p>
-<h2 id="c-中小顶堆和大顶堆的实现"><a href="#c-中小顶堆和大顶堆的实现" class="headerlink" title="c++中小顶堆和大顶堆的实现"></a>c++中小顶堆和大顶堆的实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>&gt; big;　　　　<span class="comment">// 大顶堆</span></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; small;　　<span class="comment">// 小顶堆</span></span><br><span class="line">big.push(x); <span class="comment">//push操作，将新元素插入堆并进行堆的调整</span></span><br><span class="line"><span class="keyword">int</span> x=big.pop(); <span class="comment">//pop操作，将堆顶的元素弹出堆，即最大或最小元素</span></span><br></pre></td></tr></table></figure>
+<h2 id="c-中小顶堆和大顶堆的实现"><a href="#c-中小顶堆和大顶堆的实现" class="headerlink" title="c++中小顶堆和大顶堆的实现"></a>c++中小顶堆和大顶堆的实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>&gt; big;　　　　<span class="comment">// 大顶堆</span></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; small;　　<span class="comment">// 小顶堆</span></span><br><span class="line">big.push(x); <span class="comment">//push操作，将新元素插入堆并进行堆的调整</span></span><br><span class="line"><span class="keyword">int</span> x=big.top(); <span class="comment">//pop操作，将堆顶的元素弹出堆，即最大或最小元素</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>求哈夫曼树最短路径长度</title>
+    <url>/2021/03/09/%E6%B1%82%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>哈夫曼树，第一行输入一个数n，表示叶结点的个数。需要用这些叶结点生成哈夫曼树，根据哈夫曼树的概念，这些结点有权值，即weight，题目需要输出所有结点的值与权值的乘积之和的最小值。</p>
+<a id="more"></a>
+
+<p><strong>输入描述:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组第一行输入一个数n，接着输入n个叶节点（叶节点权值不超过100，2&lt;&#x3D;n&lt;&#x3D;1000）。</span><br></pre></td></tr></table></figure>
+<p><strong>输出描述:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输出权值。</span><br></pre></td></tr></table></figure>
+<p><strong>输入样例</strong></p>
+<blockquote>
+<p>5</p>
+<p>1 2 2 5 9</p>
+</blockquote>
+<p>输出样例</p>
+<blockquote>
+<p>37</p>
+</blockquote>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>解题关键是权值的求法：赫夫曼树的带权路径之和为各叶子节点的权值与路径长度（层次数减一或从根节点到达叶子节点路径上的非叶子节点的个数）之积的和。在构造赫夫曼树时，非叶子节点也会带有权值（为其子节点的权值之和），当加上一个非叶子节点的权值时相当于加上以其为根节点的子树的所有叶子节点的权值。而加上从根节点到叶子节点路径上的非叶子节点权值，就包含了该叶子节点的带权路径长度。所以<strong>带权路径之和即为所有非叶子节点的权值之和</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">//构造小顶堆，为得到当前叶结点序列中的最小值</span></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;,greater&lt;<span class="keyword">int</span>&gt;&gt; hafman;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,num,totalkey=<span class="number">0</span>; <span class="comment">//n为叶结点树木，num为输入值，totalkey存储叶结点权值和</span></span><br><span class="line">    <span class="keyword">int</span> leaf1,leaf2;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">int</span> i=n;</span><br><span class="line">    <span class="keyword">while</span>(i&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;num;</span><br><span class="line">        hafman.push(num);</span><br><span class="line">        i--;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">//构造哈夫曼树，当有多余2个叶结点时可以继续构造</span></span><br><span class="line">    <span class="keyword">while</span>(hafman.size()&gt;<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">//将堆顶的两个最小叶结点弹出构造一个父结点</span></span><br><span class="line">        leaf1=hafman.top();</span><br><span class="line">        hafman.pop();</span><br><span class="line">        leaf2=hafman.top();</span><br><span class="line">        hafman.pop();</span><br><span class="line">      <span class="comment">//将新结点作为叶子结点放进堆中，并重新进行排序</span></span><br><span class="line">        hafman.push(leaf1+leaf2);</span><br><span class="line">      <span class="comment">//关键步骤</span></span><br><span class="line">        totalkey+=leaf1+leaf2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;totalkey;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>考研复试机试</category>
