@@ -185,6 +185,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/avator.jpg">
+      <meta itemprop="name" content="dochengzz">
+      <meta itemprop="description" content="coding and reading">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dochengzz的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/" class="post-title-link" itemprop="url">c++实现小顶堆和大顶堆</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-08 17:10:21" itemprop="dateCreated datePublished" datetime="2021-03-08T17:10:21+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-09 15:14:08" itemprop="dateModified" datetime="2021-03-09T15:14:08+08:00">2021-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%80%83%E7%A0%94%E5%A4%8D%E8%AF%95%E6%9C%BA%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">考研复试机试</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+
+<h1 id="小顶堆和大顶堆"><a href="#小顶堆和大顶堆" class="headerlink" title="小顶堆和大顶堆"></a>小顶堆和大顶堆</h1><h2 id="什么是小顶堆和大顶堆"><a href="#什么是小顶堆和大顶堆" class="headerlink" title="什么是小顶堆和大顶堆"></a>什么是小顶堆和大顶堆</h2><p>堆是一种<strong>非线性结构</strong>，可以把堆看作一个数组，也可以被看作一个完全二叉树，通俗来讲<strong>堆其实就是利用完全二叉树的结构来维护的一维数组</strong></p>
+<p>按照堆的特点可以把堆分为<strong>大顶堆</strong>和<strong>小顶堆</strong></p>
+<p>大顶堆：每个结点的值都<strong>大于</strong>或<strong>等于</strong>其左右孩子结点的值</p>
+<p>小顶堆：每个结点的值都<strong>小于</strong>或<strong>等于</strong>其左右孩子结点的值</p>
+<p>（堆的这种特性非常的有用，堆常常被当做优先队列使用，因为可以快速的访问到“最重要”的元素）</p>
+<img src="https://i.loli.net/2021/03/09/9tk6zaVicMxnGZr.png" alt="image.png" style="zoom:50%;" />
+
+<p>我们对堆中的结点按层进行编号，将这种逻辑结构映射到数组中就是下面这个样子</p>
+<img src="/Users/apple/Library/Application Support/typora-user-images/image-20210309145219125.png" alt="image-20210309145219125" style="zoom:50%;" />
+
+<p>我们用简单的公式来描述一下堆的定义就是：</p>
+<p><strong>大顶堆：</strong>arr[i] &gt;= arr[2i+1] &amp;&amp; arr[i] &gt;= arr[2i+2] </p>
+<p><strong>小顶堆：</strong>arr[i] &lt;= arr[2i+1] &amp;&amp; arr[i] &lt;= arr[2i+2] </p>
+<p>所以利用堆的数据结构，可以将序列中最大或者最小的元素不断输出出来，这样实现了排序的目的，常用来构造哈夫曼树。</p>
+<h2 id="堆排序的过程"><a href="#堆排序的过程" class="headerlink" title="堆排序的过程"></a>堆排序的过程</h2><p>先了解下<strong>堆排序</strong>的基本思想：</p>
+<p>将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值，</p>
+<p>如此反复执行，便能得到一个有序序列了，建立最大堆时是从<strong>最后一个非叶子节点</strong>开始从下往上调整的（对应到数组中即是n/2的位置，真好为第一个非叶子结点）。</p>
+<h2 id="c-中小顶堆和大顶堆的实现"><a href="#c-中小顶堆和大顶堆的实现" class="headerlink" title="c++中小顶堆和大顶堆的实现"></a>c++中小顶堆和大顶堆的实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>&gt; big;　　　　<span class="comment">// 大顶堆</span></span><br><span class="line"><span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; small;　　<span class="comment">// 小顶堆</span></span><br><span class="line">big.push(x); <span class="comment">//push操作，将新元素插入堆并进行堆的调整</span></span><br><span class="line"><span class="keyword">int</span> x=big.pop(); <span class="comment">//pop操作，将堆顶的元素弹出堆，即最大或最小元素</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/08/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -723,7 +830,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
