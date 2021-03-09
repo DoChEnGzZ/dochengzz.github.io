@@ -180,12 +180,12 @@
   <entry>
     <title>c++实现小顶堆和大顶堆</title>
     <url>/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<h1 id="小顶堆和大顶堆"><a href="#小顶堆和大顶堆" class="headerlink" title="小顶堆和大顶堆"></a>小顶堆和大顶堆</h1><a id="more"></a>
 
-<h1 id="小顶堆和大顶堆"><a href="#小顶堆和大顶堆" class="headerlink" title="小顶堆和大顶堆"></a>小顶堆和大顶堆</h1><h2 id="什么是小顶堆和大顶堆"><a href="#什么是小顶堆和大顶堆" class="headerlink" title="什么是小顶堆和大顶堆"></a>什么是小顶堆和大顶堆</h2><p>堆是一种<strong>非线性结构</strong>，可以把堆看作一个数组，也可以被看作一个完全二叉树，通俗来讲<strong>堆其实就是利用完全二叉树的结构来维护的一维数组</strong></p>
-<p>按照堆的特点可以把堆分为<strong>大顶堆</strong>和<strong>小顶堆</strong></p>
-<p>大顶堆：每个结点的值都<strong>大于</strong>或<strong>等于</strong>其左右孩子结点的值</p>
-<p>小顶堆：每个结点的值都<strong>小于</strong>或<strong>等于</strong>其左右孩子结点的值</p>
+<h2 id="什么是小顶堆和大顶堆"><a href="#什么是小顶堆和大顶堆" class="headerlink" title="什么是小顶堆和大顶堆"></a>什么是小顶堆和大顶堆</h2><p>堆是一种<strong>非线性结构</strong>，可以把堆看作一个数组，也可以被看作一个完全二叉树，通俗来讲<strong>堆其实就是利用完全二叉树的结构来维护的一维数组</strong>。</p>
+<p>按照堆的特点可以把堆分为<strong>大顶堆</strong>和<strong>小顶堆</strong>。</p>
+<p>大顶堆：每个结点的值都<strong>大于</strong>或<strong>等于</strong>其左右孩子结点的值。</p>
+<p>小顶堆：每个结点的值都<strong>小于</strong>或<strong>等于</strong>其左右孩子结点的值。</p>
 <p>（堆的这种特性非常的有用，堆常常被当做优先队列使用，因为可以快速的访问到“最重要”的元素）</p>
 <img src="https://i.loli.net/2021/03/09/9tk6zaVicMxnGZr.png" alt="image.png" style="zoom:50%;" />
 
