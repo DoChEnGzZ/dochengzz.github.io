@@ -293,4 +293,43 @@
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数组翻转</title>
+    <url>/2021/03/21/%E6%95%B0%E7%BB%84%E7%BF%BB%E8%BD%AC/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>首先输入一个5 * 5的数组，然后输入一行，这一行有四个数，前两个代表操作类型，后两个数x y代表需操作数据为以x y为左上角的那几个数据。 操作类型有四种： 1 2 表示：90度，顺时针，翻转4个数 1 3 表示：90度，顺时针，翻转9个数 2 2 表示：90度，逆时针，翻转4个数 2 3 表示：90度，逆时针，翻转9个数 </p>
+<a id="more"></a>
+
+<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组输入一个5 * 5的数组，然后输入一行，这一行有四个数，前两个代表操作类型，后两个数x y代表需操作数据为以x y为左上角的那几个数据。</span><br></pre></td></tr></table></figure>
+<h2 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输出翻转后的数组。</span><br></pre></td></tr></table></figure>
+<p>示例1</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5</span><br><span class="line">6 7 8 9 10</span><br><span class="line">11 12 13 14 15</span><br><span class="line">16 17 18 19 20</span><br><span class="line">21 22 23 24 25</span><br><span class="line">1 3 1 1</span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">11 6 1 4 5</span><br><span class="line">12 7 2 9 10</span><br><span class="line">13 8 3 14 15</span><br><span class="line">16 17 18 19 20</span><br><span class="line">21 22 23 24 25</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>这题自己没想出来，看了牛客网上别人分享的题解，才有了解题思路，关键在于翻转公式，即一个坐标(x,y)围绕另一个坐标(rx,ry)旋转\theta度后的坐标(x<sub>0</sub>,y<sub>0</sub>)。</p>
+<p>公式如下：</p>
+<blockquote>
+<p><img src="https://www.nowcoder.com/equation?tex=x_0=%20(x%20-%20rx)*cos(a)%20-%20(y%20-%20ry)*sin(a)%20+%20rx%20;&preview=true" alt="img"></p>
+<p><img src="https://www.nowcoder.com/equation?tex=y_0=%20(x%20-%20rx)*sin(a)%20+%20(y%20-%20ry)*cos(a)%20+%20ry;&preview=true" alt="img"></p>
+</blockquote>
+<p>顺时针旋转90度时，sin(a)为1，cos(a)为0，逆时针旋转90度时，sin(a)为-1，cos(a)为0。当旋转4个数时，旋转中心的坐标为(x+0.5,y+0.5),当旋转9个数时，旋转中心的坐标为(x+1,y+1)。这样带入公式可以得到对应的旋转公式。</p>
+<p>顺时针：</p>
+<blockquote>
+<p>​                                                   x<sub>0</sub>=rx+ry+num-1-y</p>
+<p>​                                                   y<sub>0</sub>=x+ry-rx</p>
+</blockquote>
+<p>逆时针：</p>
+<blockquote>
+<p>​                                                  x<sub>0</sub>=rx-ry+y</p>
+<p>​                                                   y<sub>0</sub>=x+y+num-1-i</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 5</span></span><br><span class="line"><span class="keyword">int</span> a[SIZE][SIZE]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotate</span><span class="params">(<span class="keyword">int</span> a[SIZE][SIZE],<span class="keyword">int</span> op1,<span class="keyword">int</span> op2,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num,direction; <span class="comment">//num记录翻转的子数组大小，direction记录翻转方向，0为顺时针，1为逆时针</span></span><br><span class="line">    <span class="keyword">int</span> b[SIZE][SIZE]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span>(op1==<span class="number">1</span>)</span><br><span class="line">        direction=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        direction=<span class="number">1</span>;</span><br><span class="line">    num = op2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=SIZE;j++)</span><br><span class="line">            <span class="keyword">if</span>((i&gt;=x&amp;&amp;j&gt;=y)&amp;&amp;(i&lt;=x+num<span class="number">-1</span>)&amp;&amp;j&lt;=y+num<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(direction)<span class="comment">//逆时针</span></span><br><span class="line">                &#123;</span><br><span class="line">                    b[x+y+num<span class="number">-1</span>-j][i+y-x]=a[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">//顺时针</span></span><br><span class="line">                &#123;</span><br><span class="line">                    b[x-y+j][x+y+num<span class="number">-1</span>-i]=a[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                b[i][j]=a[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memcpy</span>(a,b,<span class="keyword">sizeof</span> (b));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> op1,op2,x,y;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j&lt;=SIZE; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cin</span>&gt;&gt;a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;op1&gt;&gt;op2&gt;&gt;x&gt;&gt;y;</span><br><span class="line">    Rotate(a,op1,op2,x,y);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=SIZE;j++)&#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i][j]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
 </search>
