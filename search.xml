@@ -29,7 +29,8 @@
     <url>/2021/01/27/%E5%89%8D%E8%A8%80/</url>
     <content><![CDATA[<a id="more"></a>
 
-<p>  时间来到2021年1月，考研刚刚结束，结果尚未可知，学业与生活双双不顺，因此使用<code>hexo</code>和<code>github</code>搭建此博客用于记录学习和阅读的过程，希望在春招能获得理想的结果。</p>
+<p>  时间来到2021年1月，考研刚刚结束，结果尚未可知，学业与生活双双不顺，因此使用<code>hexo</code>和<code>github</code>搭建此博客用于记录学习和阅读的过程，<del>希望在春招能获得理想的结果</del>。</p>
+<p>考研成功上岸哈哈哈哈</p>
 <p>  本博客不指望有观众，只求多年后看到自己的学习经历能一笑置之。如果有某位观众老爷碰巧进入我的博客，也感谢您的大驾光临，令本地蓬荜生辉。</p>
 <p> 正在努力把之前博客园的文章搬过来，进度缓慢。。</p>
 ]]></content>
@@ -370,6 +371,41 @@
       </categories>
       <tags>
         <tag>王小波</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>毕业设计-基于安卓系统的设备管理测试软件</title>
+    <url>/2021/04/06/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1-%E5%9F%BA%E4%BA%8E%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="设备启动步骤"><a href="#设备启动步骤" class="headerlink" title="设备启动步骤"></a>设备启动步骤</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">help</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改 ttt里的IP地址为计算机的地址78</span></span><br><span class="line"><span class="meta">#</span><span class="bash">登录主板</span></span><br><span class="line">cd  u</span><br><span class="line"><span class="meta">#</span><span class="bash"> -g  下载，-r 下载时间不受限制</span></span><br><span class="line">tftp -g -r ttt  192.168.0.78</span><br><span class="line">sh ttt</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用tftp将ttt.sh传输到设备的<code>/u</code>目录中，执行ttt。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">ttt</span></span><br><span class="line">tftp -g -r pardus 192.168.0.36</span><br><span class="line">tftp -g -r pardus.ko 192.168.0.36</span><br><span class="line">tftp -g -r version 192.168.0.36</span><br><span class="line">tftp -g -r start.sh 192.168.0.36</span><br><span class="line">chmod +x start.sh</span><br><span class="line">chmod +x pardus</span><br><span class="line">chmod +x pardus.ko</span><br><span class="line">ls &gt;disable</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>执行ttt的过程中将执行文件<code>pardus</code>，<code>pardus.ko</code>，<code>version</code>，<code>start.sh</code>通过tftp传输到设备中。</li>
+<li>初始化工作由<code>start.sh</code>完成，<code>ustart.h</code>可以完成不同参数的初始化工作（需要实现软件在ui设置初始化的参数）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">start.sh</span></span><br><span class="line">ifconfig eth1 down</span><br><span class="line">ifconfig eth1 hw ether 40:3D:5F:20:00:30</span><br><span class="line">ifconfig eth1 up</span><br><span class="line">ifconfig eth1 192.168.0.80</span><br><span class="line">ifconfig eth0 192.168.1.80</span><br><span class="line">ifconfig eth0 down</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">每次启动初始化将version字段+1</span></span><br><span class="line">cat /u/version | while read var </span><br><span class="line">do</span><br><span class="line">var=`expr $var + 1`</span><br><span class="line">echo $var&gt;/u/version</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">sleep 2</span><br><span class="line">insmod /u/pardus.ko</span><br><span class="line">/u/pardus</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">ustart.sh</span></span><br><span class="line">ifconfig eth1 down</span><br><span class="line">ifconfig eth1 hw ether 40:3D:5F:20:05:72</span><br><span class="line">ifconfig eth1 up</span><br><span class="line">ifconfig eth1 192.168.0.72</span><br><span class="line">ifconfig eth0 192.168.1.72</span><br><span class="line">ifconfig eth0 down</span><br><span class="line"></span><br><span class="line">cat /u/version | while read var </span><br><span class="line">do</span><br><span class="line">var=`expr $var + 1`</span><br><span class="line">echo $var&gt;/u/version</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">sleep 2</span><br><span class="line">insmod /u/pardus.ko</span><br><span class="line">/u/pardus -g 80000/0</span><br><span class="line">sleep 1</span><br><span class="line">/u/pardus</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="需要实现的功能"><a href="#需要实现的功能" class="headerlink" title="需要实现的功能"></a>需要实现的功能</h2><ol>
+<li>初始化</li>
+</ol>
+<p><strong>参数</strong>有哪些？从设备中传调整好参数的ttt和start</p>
+<ol start="2">
+<li>升级</li>
+</ol>
+<p>升级需要改变什么？</p>
+<ol start="3">
+<li>显示参数 </li>
+</ol>
+<p>cpu情况，内存情况，当前版本，ip地址等等信息。</p>
+]]></content>
+      <categories>
+        <category>毕设</category>
+      </categories>
+      <tags>
+        <tag>linux 安卓</tag>
       </tags>
   </entry>
 </search>
