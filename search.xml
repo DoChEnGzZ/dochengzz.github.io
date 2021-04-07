@@ -397,23 +397,55 @@
 </ol>
 <p><strong>参数</strong>有哪些？从设备中传调整好参数的ttt和start</p>
 <ul>
-<li>从安卓设备中将几个配置文件传到待测试设备中</li>
+<li>从安卓设备中将几个配置文件传到待测试设备中  ？？？<strong>怎么传送</strong>用<strong>ftp</strong>协议</li>
 <li><code>start.sh</code>中的参数需要修改设备以太网接口的mac地址和ip地址</li>
 </ul>
 <ol start="2">
 <li>升级</li>
 </ol>
-<p>升级需要改变什么？</p>
+<p><del>升级需要改变什么？</del></p>
+<p>需要更新<strong>pardus</strong>和<strong>pardus.ko</strong></p>
 <ol start="3">
-<li>显示参数 </li>
+<li>显示设备属性</li>
 </ol>
 <p>cpu情况，内存情况，当前版本，ip地址等等信息。</p>
+<p>使用top等命令，进行正则模式匹配得到对应系统信息，传至安卓设备中，形成设备信息，需要定期刷新？</p>
+<ol start="4">
+<li><p>输出日志信息</p>
+<p><code>pardus</code>会定期输出日志，需要将日志信息采集到安卓软件中</p>
+</li>
+</ol>
+<h2 id="实现方法-二选一"><a href="#实现方法-二选一" class="headerlink" title="实现方法(二选一)"></a>实现方法(二选一)</h2><ol>
+<li>在安卓端实现一个talnet连接功能的软件，将所有脚本的命令按功能需求执行。<code>start.sh</code>还是需要传送过去。</li>
+<li>在安卓端用tftp传输脚本文件到设备中，根据需要设置的参数修改脚本文件，然后执行脚本文件。</li>
+</ol>
+<p>看起来第一种实现方法比较好</p>
 ]]></content>
       <categories>
         <category>毕设</category>
       </categories>
       <tags>
         <tag>linux 安卓</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git常用命令记录</title>
+    <url>/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>简易版git使用指南，记性太差老是忘记这些命令又要重新查，所以记在自己博客里方便查看。</p>
+<a id="more"></a>
+
+<h2 id="初始化本地仓库"><a href="#初始化本地仓库" class="headerlink" title="初始化本地仓库"></a>初始化本地仓库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<h2 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone username@host:/path/to/repositor</span><br></pre></td></tr></table></figure>
+<h2 id="添加文件到本地缓存区"><a href="#添加文件到本地缓存区" class="headerlink" title="添加文件到本地缓存区"></a>添加文件到本地缓存区</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<h2 id="提交文件到本地仓库"><a href="#提交文件到本地仓库" class="headerlink" title="提交文件到本地仓库"></a>提交文件到本地仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;代码提交信息&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+<h2 id="更新本地仓库"><a href="#更新本地仓库" class="headerlink" title="更新本地仓库"></a>更新本地仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
       </tags>
   </entry>
 </search>
