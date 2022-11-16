@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>c++实现小顶堆和大顶堆</title>
+    <url>/2021/03/08/c-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E9%A1%B6%E5%A0%86%E5%92%8C%E5%A4%A7%E9%A1%B6%E5%A0%86/</url>
+    <content><![CDATA[<h1 id="小顶堆和大顶堆"><a href="#小顶堆和大顶堆" class="headerlink" title="小顶堆和大顶堆"></a>小顶堆和大顶堆</h1><span id="more"></span>
+
+<h2 id="什么是小顶堆和大顶堆"><a href="#什么是小顶堆和大顶堆" class="headerlink" title="什么是小顶堆和大顶堆"></a>什么是小顶堆和大顶堆</h2><p>堆是一种<strong>非线性结构</strong>，可以把堆看作一个数组，也可以被看作一个完全二叉树，通俗来讲<strong>堆其实就是利用完全二叉树的结构来维护的一维数组</strong>。</p>
+<p>按照堆的特点可以把堆分为<strong>大顶堆</strong>和<strong>小顶堆</strong>。</p>
+<p>大顶堆：每个结点的值都<strong>大于</strong>或<strong>等于</strong>其左右孩子结点的值。</p>
+<p>小顶堆：每个结点的值都<strong>小于</strong>或<strong>等于</strong>其左右孩子结点的值。</p>
+<p>（堆的这种特性非常的有用，堆常常被当做优先队列使用，因为可以快速的访问到“最重要”的元素）</p>
+<img src="https://i.loli.net/2021/03/09/9tk6zaVicMxnGZr.png" alt="image.png" style="zoom:50%;" />
+
+<p>我们对堆中的结点按层进行编号，将这种逻辑结构映射到数组中就是下面这个样子</p>
+<img src="/Users/apple/Library/Application Support/typora-user-images/image-20210309145219125.png" alt="image-20210309145219125" style="zoom:50%;" />
+
+<p>我们用简单的公式来描述一下堆的定义就是：</p>
+<p><strong>大顶堆：</strong>arr[i] &gt;= arr[2i+1] &amp;&amp; arr[i] &gt;= arr[2i+2] </p>
+<p><strong>小顶堆：</strong>arr[i] &lt;= arr[2i+1] &amp;&amp; arr[i] &lt;= arr[2i+2] </p>
+<p>所以利用堆的数据结构，可以将序列中最大或者最小的元素不断输出出来，这样实现了排序的目的，常用来构造哈夫曼树。</p>
+<h2 id="堆排序的过程"><a href="#堆排序的过程" class="headerlink" title="堆排序的过程"></a>堆排序的过程</h2><p>先了解下<strong>堆排序</strong>的基本思想：</p>
+<p>将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值，</p>
+<p>如此反复执行，便能得到一个有序序列了，建立最大堆时是从<strong>最后一个非叶子节点</strong>开始从下往上调整的（对应到数组中即是n/2的位置，真好为第一个非叶子结点）。</p>
+<h2 id="c-中小顶堆和大顶堆的实现"><a href="#c-中小顶堆和大顶堆的实现" class="headerlink" title="c++中小顶堆和大顶堆的实现"></a>c++中小顶堆和大顶堆的实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line">priority_queue&lt;<span class="type">int</span>&gt; big;　　　　<span class="comment">// 大顶堆</span></span><br><span class="line">priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt; &gt; small;　　<span class="comment">// 小顶堆</span></span><br><span class="line">big.<span class="built_in">push</span>(x); <span class="comment">//push操作，将新元素插入堆并进行堆的调整</span></span><br><span class="line"><span class="type">int</span> x=big.<span class="built_in">top</span>(); <span class="comment">//pop操作，将堆顶的元素弹出堆，即最大或最小元素</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git常用命令记录</title>
+    <url>/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>简易版git使用指南，记性太差老是忘记这些命令又要重新查，所以记在自己博客里方便查看。</p>
+<span id="more"></span>
+
+<h2 id="初始化本地仓库"><a href="#初始化本地仓库" class="headerlink" title="初始化本地仓库"></a>初始化本地仓库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<h2 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone username@host:/path/to/repositor</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加文件到本地缓存区"><a href="#添加文件到本地缓存区" class="headerlink" title="添加文件到本地缓存区"></a>添加文件到本地缓存区</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<h2 id="提交文件到本地仓库"><a href="#提交文件到本地仓库" class="headerlink" title="提交文件到本地仓库"></a>提交文件到本地仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;代码提交信息&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新本地仓库"><a href="#更新本地仓库" class="headerlink" title="更新本地仓库"></a>更新本地仓库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二进制数</title>
+    <url>/2021/03/07/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0/</url>
+    <content><![CDATA[<p><strong>题目描述</strong></p>
+<blockquote>
+<p>大家都知道，数据在计算机里中存储是以二进制的形式存储的。 有一天，小明学了C语言之后，他想知道一个类型为unsigned int 类型的数字，存储在计算机中的二进制串是什么样子的。 你能帮帮小明吗？并且，小明不想要二进制串中前面的没有意义的0串，即要去掉前导0。</p>
+</blockquote>
+<span id="more"></span>
+
+<p><strong>输入</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">多行，每一行表示要求的数字</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>输出</strong></p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输出共T行。每行输出求得的二进制串。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>示例</strong></p>
+<p>输入：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">23</span><br><span class="line">535</span><br><span class="line">2624</span><br><span class="line">56275</span><br><span class="line">989835</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>输出：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10111</span><br><span class="line">1000010111</span><br><span class="line">101001000000</span><br><span class="line">1101101111010011</span><br><span class="line">11110001101010001011</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>代码</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> num,mod,count;</span><br><span class="line">  <span class="comment">//核心思想除2取余得二进制结果</span></span><br><span class="line">    <span class="keyword">while</span>(cin&gt;&gt;num)&#123;</span><br><span class="line">        count=<span class="number">0</span>;</span><br><span class="line">      <span class="comment">//用数组存储除2取余的结果</span></span><br><span class="line">        <span class="type">int</span> a[<span class="number">100</span>];</span><br><span class="line">      <span class="comment">//如果输入数据为1则直接输出</span></span><br><span class="line">        <span class="keyword">if</span>(num==<span class="number">1</span>)</span><br><span class="line">            cout&lt;&lt;<span class="number">1</span>;</span><br><span class="line">      <span class="comment">//循环除2取余</span></span><br><span class="line">        <span class="keyword">while</span>(num!=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            a[count++]=num%<span class="number">2</span>;</span><br><span class="line">            num=num/<span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="comment">//逆序输出，为二进制结果</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=count<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;a[i];</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前言</title>
+    <url>/2021/01/27/%E5%89%8D%E8%A8%80/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p>  时间来到2021年1月，考研刚刚结束，结果尚未可知，学业与生活双双不顺，因此使用<code>hexo</code>和<code>github</code>搭建此博客用于记录学习和阅读的过程，<del>希望在春招能获得理想的结果</del>。</p>
+<p>考研成功上岸哈哈哈哈</p>
+<p>  本博客不指望有观众，只求多年后看到自己的学习经历能一笑置之。如果有某位观众老爷碰巧进入我的博客，也感谢您的大驾光临，令本地蓬荜生辉。</p>
+<p> 正在努力把之前博客园的文章搬过来，进度缓慢。。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo的命令</title>
+    <url>/2022/11/16/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何使用hexo搭建博客</title>
+    <url>/2021/01/30/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<p><a href="https://hexo.io/zh-cn/docs/">Hexo官方文档</a></p>
+<span id="more"></span>
+
+
+
+
+
+<h2 id="1-使用github的仓库提供服务器"><a href="#1-使用github的仓库提供服务器" class="headerlink" title="1 使用github的仓库提供服务器"></a>1 使用github的仓库提供服务器</h2><p>创建仓库的名字必须为<strong>username.github.io</strong>，我的用户名为dochengzz，因此我创建的仓库就是<strong>do cengzz.github.io</strong>，这是很关键的一点，很重要。输入名字后，直接点最下面绿色的按钮，创建新仓库。这一部分基本完成了，接下去需要在终端操作。</p>
+<img src="https://i.loli.net/2021/03/07/Fa16qBrzuGkOoe8.png" alt="image.png" style="zoom: 50%;" />
+
+
+
+<h2 id="2-本地工作"><a href="#2-本地工作" class="headerlink" title="2 本地工作"></a>2 本地工作</h2><h3 id="2-1-安装Node-js与Git"><a href="#2-1-安装Node-js与Git" class="headerlink" title="2.1 安装Node.js与Git"></a>2.1 安装Node.js与Git</h3><p><a href="https://nodejs.org/en/">Node.js</a></p>
+<p>Node.js 为大多数平台提供了官方的 <a href="https://nodejs.org/en/download/">安装程序</a>。对于中国大陆地区用户，可以前往 <a href="https://npm.taobao.org/mirrors/node">淘宝 Node.js 镜像</a> 下载。</p>
+<p>其它的安装方法：</p>
+<ul>
+<li>Windows：通过 <a href="https://github.com/jasongin/nvs/">nvs</a>（推荐）或者<a href="https://github.com/nvm-sh/nvm">nvm</a> 安装。</li>
+<li>Mac：使用 <a href="https://brew.sh/">Homebrew</a> 或 <a href="http://www.macports.org/">MacPorts</a> 安装。</li>
+<li>Linux（DEB/RPM-based）：从 <a href="https://github.com/nodesource/distributions">NodeSource</a> 安装。</li>
+<li>其它：使用相应的软件包管理器进行安装，可以参考由 Node.js 提供的 <a href="https://nodejs.org/en/download/package-manager/">指导</a></li>
+</ul>
+<p><a href="http://git-scm.com/">Git</a></p>
+<ul>
+<li>Windows：下载并安装 <a href="https://git-scm.com/download/win">git</a>.</li>
+<li>Mac：使用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a>, <a href="http://www.macports.org/">MacPorts</a> 或者下载 <a href="http://sourceforge.net/projects/git-osx-installer/">安装程序</a>。</li>
+<li>Linux (Ubuntu, Debian)：<code>sudo apt-get install git-core</code></li>
+<li>Linux (Fedora, Red Hat, CentOS)：<code>sudo yum install git-core</code></li>
+</ul>
+<h3 id="2-2-安装Hexo"><a href="#2-2-安装Hexo" class="headerlink" title="2.2 安装Hexo"></a>2.2 安装Hexo</h3><ul>
+<li>如果已经安装好了上述的软件，那么可以安装hexo，然后等待安装成功即可。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建blog文件夹，并初始化建立博客框架</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在你的家目录下创建一个blog文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> blog</span><br><span class="line"><span class="comment"># 进入目录</span></span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line"><span class="comment"># 初始化目录</span></span><br><span class="line">hexo init</span><br><span class="line">开启本地服务 </span><br><span class="line"><span class="comment"># hexo s</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>出现以下信息，说明你可以本地访问博客系统，在浏览器输入4000这个网址，就可以看到博客首页。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">appledeMacBook-Pro-2:hexo apple$ hexo s</span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/03/07/8zKIvdLUnqVZ76e.png" alt="image.png" style="zoom:50%;" />
+
+<h3 id="2-3-将hexo关联到github仓库"><a href="#2-3-将hexo关联到github仓库" class="headerlink" title="2.3 将hexo关联到github仓库"></a>2.3 将hexo关联到github仓库</h3><ul>
+<li>首先我们要编辑博客目录中的<code>_config.yml</code>文件，这是博客的主要配置文件，在创建博客的过程中我们需要频繁控制这个配置文件，这里先编辑一步，为了管理GitHub账号。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">根目录内容如下，其中_config.yml即为</span></span><br><span class="line">appledeMacBook-Pro-2:hexo apple$ ls</span><br><span class="line">_config.landscape.yml	db.json			package-lock.json	public			source</span><br><span class="line">_config.yml		node_modules		package.json		scaffolds		themes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打开文件之后，在文档如下位置，输入如下内容，只需要将你的username替换就可以了，其他无需更改。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Deployment</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Docs: https://hexo.io/docs/one-command-deployment</span></span></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:dochengzz/dochengzz.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后在目录中执行</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 产生静态网页</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment"># 部署到GitHub page上</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>然后你需要输入你GitHub的用户名和密码，这样你就就可以使用你的仓库名去访问你的博客主页了。为了每一次部署不必一种输入密码，我们可以生成秘钥，然后提交到GitHub，进行关联，那么你下次就不需要再输入密码了。</p>
+<ul>
+<li>关联GitHub账号，免密提交</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用你注册GitHub时的邮箱号，进行秘钥生成</span></span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxxxxxx@qq.com&quot;</span></span><br><span class="line"><span class="comment"># 系统就会生成一个隐藏文件夹.ssh</span></span><br><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="comment"># 复制公钥</span></span><br><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>点击箭头的按钮，进入设置，然后点击SSH and GPG keys，创建新的SSH，将之前复制的公钥黏贴，提交，OK。</p>
+<img src="https://i.loli.net/2021/03/07/76xEVgk12BCeh8L.png" alt="image.png" style="zoom:50%;" />
+
+<h2 id="3-博客的使用"><a href="#3-博客的使用" class="headerlink" title="3 博客的使用"></a>3 博客的使用</h2><p>有时间更新下换主题、怎么写博客、怎么创建评论系统等等教程。。</p>
+<p>我的主题：<a href="http://theme-next.iissnan.com/getting-started.html">Next</a></p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>当我谈跑步时我谈些什么1</title>
+    <url>/2021/04/27/%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6%E6%88%91%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%881/</url>
+    <content><![CDATA[<p>作为一个同样热爱跑步的人，我早已经对村上春树的《当我谈跑步时我谈些什么》很感兴趣了，人与人之间对事情的看法不尽相同，但是总能从别人的想法中得到些什么。这篇博客会记录我感触很深的话。</p>
+<span id="more"></span>
+
+<h3 id="第二章-人是如何成为跑步小说家的"><a href="#第二章-人是如何成为跑步小说家的" class="headerlink" title="第二章 人是如何成为跑步小说家的"></a>第二章 人是如何成为跑步小说家的</h3><blockquote>
+<p>不过细想起来，这种生来容易发胖的体质或许是一种幸运。比如说，我这种人为了不增加体重，每天得剧烈的运动，留意饮食有所节制。何等浪费的人生啊！但倘若从不偷懒，坚持努力，代谢便可以维持在高水平，身体愈来愈健壮，老化恐怕也会减缓。什么都不做也不发胖的人无需留意运动和饮食。并无必要却去寻这种麻烦事儿做的人肯定也不会太多，因此这种体质的人，体力每每随着年龄增长而衰退。不着意锻炼的话，肌肉自然而然便会松弛，骨质变回疏松。阅读此文的读者，也许有人抱有这样的烦恼：”啊呀呀，一不小心体重马上就增加“应当用积极正面的思考，将这件事视为上天赐予的好运。不过这么去思考问题也不容易。</p>
+</blockquote>
+<p>以后谁和我抱怨他长胖了我就这么劝他（包括我自己</p>
+]]></content>
+      <categories>
+        <category>春上村树</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快速排序</title>
+    <url>/2021/03/08/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p>快速排序是C.R.A.Hoare于1962年提出的一种划分交换排序。它采用了一种分治的策略，通常称其为分治法(Divide-and-ConquerMethod)。</p>
+<p>该方法的基本思想是：</p>
+<ul>
+<li><p>1．先从数列中取出一个数作为基准数。</p>
+</li>
+<li><p>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。</p>
+</li>
+<li><p>3．再对左右区间重复第二步，直到各区间只有一个数。  </p>
+</li>
+</ul>
+<p>快速排序利用分治法，时间复杂度为O(logn)，不稳定，原序列越混乱越排序所花时间越多。</p>
+<span id="more"></span>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">quickSort</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span> low,<span class="type">int</span> high)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span>(low&gt;=high)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">//将数组的第一个元素作为基准元素flag</span></span><br><span class="line">  <span class="comment">//一趟排序完让比flag大的元素位于flag左边，比flag小的元素位于flag右边</span></span><br><span class="line">    <span class="type">int</span> flag=a[low];</span><br><span class="line">    <span class="type">int</span> i=low,j=high;</span><br><span class="line">    <span class="keyword">while</span>(j&gt;i)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">//每次找到左边一个比flag大的元素，右边一个比flag小的元素</span></span><br><span class="line">        <span class="keyword">while</span>(a[j]&gt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            j--;</span><br><span class="line">        <span class="keyword">while</span>(a[i]&lt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            i++;</span><br><span class="line">      <span class="comment">//将二者交换</span></span><br><span class="line">        <span class="keyword">if</span>(j&gt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">swap</span>(a[i],a[j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">//将基准元素flag放到中间，实质是一次交换</span></span><br><span class="line">    <span class="type">int</span> temp=a[i];</span><br><span class="line">    a[i]=flag;</span><br><span class="line">    a[low]=temp;</span><br><span class="line">  <span class="comment">//对左边和右边进行递归</span></span><br><span class="line">    <span class="built_in">quickSort</span>(a,low,i<span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">quickSort</span>(a,i+<span class="number">1</span>,high);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组翻转</title>
+    <url>/2021/03/21/%E6%95%B0%E7%BB%84%E7%BF%BB%E8%BD%AC/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>首先输入一个5 * 5的数组，然后输入一行，这一行有四个数，前两个代表操作类型，后两个数x y代表需操作数据为以x y为左上角的那几个数据。 操作类型有四种： 1 2 表示：90度，顺时针，翻转4个数 1 3 表示：90度，顺时针，翻转9个数 2 2 表示：90度，逆时针，翻转4个数 2 3 表示：90度，逆时针，翻转9个数 </p>
+<span id="more"></span>
+
+<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组输入一个5 * 5的数组，然后输入一行，这一行有四个数，前两个代表操作类型，后两个数x y代表需操作数据为以x y为左上角的那几个数据。</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输出翻转后的数组。</span><br></pre></td></tr></table></figure>
+
+<p>示例1</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5</span><br><span class="line">6 7 8 9 10</span><br><span class="line">11 12 13 14 15</span><br><span class="line">16 17 18 19 20</span><br><span class="line">21 22 23 24 25</span><br><span class="line">1 3 1 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11 6 1 4 5</span><br><span class="line">12 7 2 9 10</span><br><span class="line">13 8 3 14 15</span><br><span class="line">16 17 18 19 20</span><br><span class="line">21 22 23 24 25</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>这题自己没想出来，看了牛客网上别人分享的题解，才有了解题思路，关键在于翻转公式，即一个坐标(x,y)围绕另一个坐标(rx,ry)旋转\theta度后的坐标(x<sub>0</sub>,y<sub>0</sub>)。</p>
+<p>公式如下：</p>
+<blockquote>
+<p><img src="https://www.nowcoder.com/equation?tex=x_0=%20(x%20-%20rx)*cos(a)%20-%20(y%20-%20ry)*sin(a)%20+%20rx%20;&preview=true" alt="img"></p>
+<p><img src="https://www.nowcoder.com/equation?tex=y_0=%20(x%20-%20rx)*sin(a)%20+%20(y%20-%20ry)*cos(a)%20+%20ry;&preview=true" alt="img"></p>
+</blockquote>
+<p>顺时针旋转90度时，sin(a)为1，cos(a)为0，逆时针旋转90度时，sin(a)为-1，cos(a)为0。当旋转4个数时，旋转中心的坐标为(x+0.5,y+0.5),当旋转9个数时，旋转中心的坐标为(x+1,y+1)。这样带入公式可以得到对应的旋转公式。</p>
+<p>顺时针：</p>
+<blockquote>
+<p>​                                                   x<sub>0</sub>=rx+ry+num-1-y</p>
+<p>​                                                   y<sub>0</sub>=x+ry-rx</p>
+</blockquote>
+<p>逆时针：</p>
+<blockquote>
+<p>​                                                  x<sub>0</sub>=rx-ry+y</p>
+<p>​                                                   y<sub>0</sub>=x+y+num-1-i</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE 5</span></span><br><span class="line"><span class="type">int</span> a[SIZE][SIZE]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Rotate</span><span class="params">(<span class="type">int</span> a[SIZE][SIZE],<span class="type">int</span> op1,<span class="type">int</span> op2,<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> num,direction; <span class="comment">//num记录翻转的子数组大小，direction记录翻转方向，0为顺时针，1为逆时针</span></span><br><span class="line">    <span class="type">int</span> b[SIZE][SIZE]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span>(op1==<span class="number">1</span>)</span><br><span class="line">        direction=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        direction=<span class="number">1</span>;</span><br><span class="line">    num = op2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=SIZE;j++)</span><br><span class="line">            <span class="keyword">if</span>((i&gt;=x&amp;&amp;j&gt;=y)&amp;&amp;(i&lt;=x+num<span class="number">-1</span>)&amp;&amp;j&lt;=y+num<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(direction)<span class="comment">//逆时针</span></span><br><span class="line">                &#123;</span><br><span class="line">                    b[x+y+num<span class="number">-1</span>-j][i+y-x]=a[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">//顺时针</span></span><br><span class="line">                &#123;</span><br><span class="line">                    b[x-y+j][x+y+num<span class="number">-1</span>-i]=a[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                b[i][j]=a[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memcpy</span>(a,b,<span class="built_in">sizeof</span> (b));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> op1,op2,x,y;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j&lt;=SIZE; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            cin&gt;&gt;a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cin&gt;&gt;op1&gt;&gt;op2&gt;&gt;x&gt;&gt;y;</span><br><span class="line">    <span class="built_in">Rotate</span>(a,op1,op2,x,y);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=SIZE;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=SIZE;j++)&#123;</span><br><span class="line">            cout&lt;&lt;a[i][j]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>斗地主打牌算大小</title>
+    <url>/2021/03/25/%E6%96%97%E5%9C%B0%E4%B8%BB%E6%89%93%E7%89%8C%E7%AE%97%E5%A4%A7%E5%B0%8F/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>牌只有1到9，手里拿着已经排好序的牌a，对方出牌b，用程序判断手中牌是否能够压过对方出牌。 规则：出牌牌型有5种  [1]一张 如4 则5…9可压过 [2]两张 如44 则55，66，77，…，99可压过 [3]三张 如444 规则如[2] [4]四张 如4444 规则如[2] [5]五张 牌型只有12345 23456 34567 45678 56789五个，后面的比前面的均大。</p>
+<span id="more"></span>
+
+<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组输入两个字符串(字符串大小不超过100)a，b。a字符串代表手中牌，b字符串代表出的牌。</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">压过输出YES 否则NO。</span><br></pre></td></tr></table></figure>
+
+<p>示例1</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">12233445566677</span><br><span class="line">33</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">YES</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h4 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h4><p>我的暴力解法，拿到题首先想到的方法，判断5种打出的牌的情况，再讨论手上的牌是否存在大于打出牌的情况。</p>
+<p>这里有一个问题，就是输入是字符串，在c++中，<code>string</code>和<code>char</code>转<code>int</code>有以下两种常用方法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">#方法<span class="number">1</span></span><br><span class="line"><span class="type">char</span> c1=<span class="string">&#x27;5&#x27;</span>;</span><br><span class="line"><span class="type">int</span> a=c1-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">#方法<span class="number">2</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctring&gt;</span></span></span><br><span class="line">stirng s1=<span class="string">&#x27;1245&#x27;</span></span><br><span class="line"><span class="type">int</span> a=<span class="built_in">stoi</span>(s1);</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://en.cppreference.com/w/cpp/string/basic_string/stol">stoi的官方文档</a></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Compare</span><span class="params">(<span class="type">const</span> string&amp; s1,<span class="type">const</span> string&amp; s2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (s2.<span class="built_in">length</span>()) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;s1.<span class="built_in">length</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s1[i]-<span class="string">&#x27;0&#x27;</span>&gt;=<span class="built_in">stoi</span>(s2))</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;s1.<span class="built_in">length</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s1[i]-<span class="string">&#x27;0&#x27;</span>&gt;=s2[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>&amp;&amp;s1[i+<span class="number">1</span>]==s1[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;s1.<span class="built_in">length</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s1[i]-<span class="string">&#x27;0&#x27;</span>&gt;=s2[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>&amp;&amp;s1[i+<span class="number">1</span>]==s1[i]&amp;&amp;s1[i+<span class="number">2</span>]==s1[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;s1.<span class="built_in">length</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s1[i]-<span class="string">&#x27;0&#x27;</span>&gt;=s2[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>&amp;&amp;s1[i+<span class="number">1</span>]==s1[i]&amp;&amp;s1[i+<span class="number">2</span>]==s1[i]&amp;&amp;s1[i+<span class="number">3</span>]==s1[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">5</span>:&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;s1.<span class="built_in">length</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s1[i]-<span class="string">&#x27;0&#x27;</span>&gt;=s2[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span></span><br><span class="line">                &amp;&amp;s1[i+<span class="number">1</span>]-<span class="string">&#x27;0&#x27;</span>==s1[i]-<span class="string">&#x27;0&#x27;</span>+<span class="number">1</span></span><br><span class="line">                &amp;&amp;s1[i+<span class="number">2</span>]-<span class="string">&#x27;0&#x27;</span>==s1[i+<span class="number">1</span>]-<span class="string">&#x27;0&#x27;</span>+<span class="number">1</span></span><br><span class="line">                &amp;&amp;s1[i+<span class="number">3</span>]-<span class="string">&#x27;0&#x27;</span>==s1[i+<span class="number">2</span>]-<span class="string">&#x27;0&#x27;</span>+<span class="number">1</span></span><br><span class="line">                &amp;&amp;s1[i+<span class="number">4</span>]-<span class="string">&#x27;0&#x27;</span>==s1[i+<span class="number">3</span>]-<span class="string">&#x27;0&#x27;</span>+<span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s1,s2;<span class="comment">//s1为手持牌，s2为打出的牌</span></span><br><span class="line">    cin&gt;&gt;s1&gt;&gt;s2;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Compare</span>(s1,s2))</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;YES&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;NO&quot;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="解法2"><a href="#解法2" class="headerlink" title="解法2"></a>解法2</h4><p>在牛客网上看到的解法，很简单只用了几十行代码。</p>
+<p><strong>还没看懂，等待学习！！！</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    string a,b;</span><br><span class="line">    <span class="keyword">while</span>(cin&gt;&gt;a&gt;&gt;b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(b[<span class="number">0</span>]==<span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;NO&quot;</span>&lt;&lt;endl; <span class="comment">//已经最大了</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;b.<span class="built_in">size</span>();i++)</span><br><span class="line">            &#123;</span><br><span class="line">                b[i]=b[i]+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(a.<span class="built_in">find</span>(b)!=<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;YES&quot;</span>&lt;&lt;endl;   <span class="comment">//叠牌</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            string c=a;</span><br><span class="line">            <span class="built_in">unique</span>(c.<span class="built_in">begin</span>(),c.<span class="built_in">end</span>());</span><br><span class="line">            <span class="keyword">if</span>(c.<span class="built_in">find</span>(b)!=<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;YES&quot;</span>&lt;&lt;endl;  <span class="comment">//顺子</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>求哈夫曼树最短路径长度</title>
+    <url>/2021/03/09/%E6%B1%82%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>哈夫曼树，第一行输入一个数n，表示叶结点的个数。需要用这些叶结点生成哈夫曼树，根据哈夫曼树的概念，这些结点有权值，即weight，题目需要输出所有结点的值与权值的乘积之和的最小值。</p>
+<span id="more"></span>
+
+<p><strong>输入描述:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组第一行输入一个数n，接着输入n个叶节点（叶节点权值不超过100，2&lt;=n&lt;=1000）。</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出描述:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输出权值。</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入样例</strong></p>
+<blockquote>
+<p>5</p>
+<p>1 2 2 5 9</p>
+</blockquote>
+<p>输出样例</p>
+<blockquote>
+<p>37</p>
+</blockquote>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>解题关键是权值的求法：赫夫曼树的带权路径之和为各叶子节点的权值与路径长度（层次数减一或从根节点到达叶子节点路径上的非叶子节点的个数）之积的和。在构造赫夫曼树时，非叶子节点也会带有权值（为其子节点的权值之和），当加上一个非叶子节点的权值时相当于加上以其为根节点的子树的所有叶子节点的权值。而加上从根节点到叶子节点路径上的非叶子节点权值，就包含了该叶子节点的带权路径长度。所以<strong>带权路径之和即为所有非叶子节点的权值之和</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//构造小顶堆，为得到当前叶结点序列中的最小值</span></span><br><span class="line">priority_queue&lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,greater&lt;<span class="type">int</span>&gt;&gt; hafman;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,num,totalkey=<span class="number">0</span>; <span class="comment">//n为叶结点树木，num为输入值，totalkey存储叶结点权值和</span></span><br><span class="line">    <span class="type">int</span> leaf1,leaf2;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="type">int</span> i=n;</span><br><span class="line">    <span class="keyword">while</span>(i&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        cin&gt;&gt;num;</span><br><span class="line">        hafman.<span class="built_in">push</span>(num);</span><br><span class="line">        i--;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">//构造哈夫曼树，当有多余2个叶结点时可以继续构造</span></span><br><span class="line">    <span class="keyword">while</span>(hafman.<span class="built_in">size</span>()&gt;<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">//将堆顶的两个最小叶结点弹出构造一个父结点</span></span><br><span class="line">        leaf1=hafman.<span class="built_in">top</span>();</span><br><span class="line">        hafman.<span class="built_in">pop</span>();</span><br><span class="line">        leaf2=hafman.<span class="built_in">top</span>();</span><br><span class="line">        hafman.<span class="built_in">pop</span>();</span><br><span class="line">      <span class="comment">//将新结点作为叶子结点放进堆中，并重新进行排序</span></span><br><span class="line">        hafman.<span class="built_in">push</span>(leaf1+leaf2);</span><br><span class="line">      <span class="comment">//关键步骤</span></span><br><span class="line">        totalkey+=leaf1+leaf2;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;totalkey;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>沉默的大多数</title>
+    <url>/2021/03/22/%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>王小波</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>毕业设计-基于安卓系统的设备管理测试软件</title>
+    <url>/2021/04/06/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1-%E5%9F%BA%E4%BA%8E%E5%AE%89%E5%8D%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6/</url>
+    <content><![CDATA[<p>测试系统管理包括测试系统的配置管理、软件版本管理和运行管理等。分析Android系统下测试系统管理APP的需求，掌握Android系统开发环境及相关开发技术，设计并实现Android系统下测试系统管理APP。</p>
+<span id="more"></span>
+
+<h2 id="设备启动步骤"><a href="#设备启动步骤" class="headerlink" title="设备启动步骤"></a>设备启动步骤</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">help</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改 ttt里的IP地址为计算机的地址78</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">登录主板</span></span><br><span class="line">cd  u</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-g  下载，-r 下载时间不受限制</span></span><br><span class="line">tftp -g -r ttt  192.168.0.78</span><br><span class="line">sh ttt</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>使用tftp将ttt.sh传输到设备的<code>/u</code>目录中，执行ttt。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">ttt</span></span><br><span class="line">tftp -g -r pardus 192.168.0.36</span><br><span class="line">tftp -g -r pardus.ko 192.168.0.36</span><br><span class="line">tftp -g -r version 192.168.0.36</span><br><span class="line">tftp -g -r start.sh 192.168.0.36</span><br><span class="line">chmod +x start.sh</span><br><span class="line">chmod +x pardus</span><br><span class="line">chmod +x pardus.ko</span><br><span class="line">ls &gt;disable</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h4 id="执行ttt的过程中将执行文件pardus，pardus-ko，version，start-sh通过tftp传输到设备中。"><a href="#执行ttt的过程中将执行文件pardus，pardus-ko，version，start-sh通过tftp传输到设备中。" class="headerlink" title="执行ttt的过程中将执行文件pardus，pardus.ko，version，start.sh通过tftp传输到设备中。"></a>执行ttt的过程中将执行文件<code>pardus</code>，<code>pardus.ko</code>，<code>version</code>，<code>start.sh</code>通过tftp传输到设备中。</h4></li>
+<li><p>初始化工作由<code>start.sh</code>完成，<code>ustart.h</code>可以完成不同参数的初始化工作（需要实现软件在ui设置初始化的参数）</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">start.sh</span></span><br><span class="line">ifconfig eth1 down</span><br><span class="line">ifconfig eth1 hw ether 40:3D:5F:20:00:30</span><br><span class="line">ifconfig eth1 up</span><br><span class="line">ifconfig eth1 192.168.0.80</span><br><span class="line">ifconfig eth0 192.168.1.80</span><br><span class="line">ifconfig eth0 down</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">每次启动初始化将version字段+1</span></span><br><span class="line">cat /u/version | while read var </span><br><span class="line">do</span><br><span class="line">var=`expr $var + 1`</span><br><span class="line">echo $var&gt;/u/version</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">sleep 2</span><br><span class="line">insmod /u/pardus.ko</span><br><span class="line">/u/pardus</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">ustart.sh</span></span><br><span class="line">ifconfig eth1 down</span><br><span class="line">ifconfig eth1 hw ether 40:3D:5F:20:05:72</span><br><span class="line">ifconfig eth1 up</span><br><span class="line">ifconfig eth1 192.168.0.72</span><br><span class="line">ifconfig eth0 192.168.1.72</span><br><span class="line">ifconfig eth0 down</span><br><span class="line"></span><br><span class="line">cat /u/version | while read var </span><br><span class="line">do</span><br><span class="line">var=`expr $var + 1`</span><br><span class="line">echo $var&gt;/u/version</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">sleep 2</span><br><span class="line">insmod /u/pardus.ko</span><br><span class="line">/u/pardus -g 80000/0</span><br><span class="line">sleep 1</span><br><span class="line">/u/pardus</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="需要实现的功能"><a href="#需要实现的功能" class="headerlink" title="需要实现的功能"></a>需要实现的功能</h2><ol>
+<li>初始化</li>
+</ol>
+<p><strong>参数</strong>有哪些？从设备中传调整好参数的ttt和start</p>
+<ul>
+<li>从安卓设备中将几个配置文件传到待测试设备中  ？？？<strong>怎么传送</strong>用<strong>ftp</strong>协议</li>
+<li><code>start.sh</code>中的参数需要修改设备以太网接口的mac地址和ip地址</li>
+</ul>
+<ol start="2">
+<li>升级</li>
+</ol>
+<p><del>升级需要改变什么？</del></p>
+<p>需要更新<strong>pardus</strong>和<strong>pardus.ko</strong></p>
+<ol start="3">
+<li>显示设备属性</li>
+</ol>
+<p>cpu情况，内存情况，当前版本，ip地址等等信息。</p>
+<p>使用top等命令，进行正则模式匹配得到对应系统信息，传至安卓设备中，形成设备信息，需要定期刷新？</p>
+<ol start="4">
+<li><p>输出日志信息</p>
+<p><code>pardus</code>会定期输出日志，需要将日志信息采集到安卓软件中</p>
+</li>
+</ol>
+<h2 id="实现方法-二选一"><a href="#实现方法-二选一" class="headerlink" title="实现方法(二选一)"></a>实现方法(二选一)</h2><ol>
+<li>在安卓端实现一个talnet连接功能的软件，将所有脚本的命令按功能需求执行。<code>start.sh</code>还是需要传送过去。</li>
+<li>在安卓端用tftp传输脚本文件到设备中，根据需要设置的参数修改脚本文件，然后执行脚本文件。</li>
+</ol>
+<p>看起来第一种实现方法比较好</p>
+]]></content>
+      <categories>
+        <category>毕设</category>
+      </categories>
+      <tags>
+        <tag>linux 安卓</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第k小的数</title>
+    <url>/2021/03/10/%E7%AC%ACk%E5%B0%8F%E7%9A%84%E6%95%B0/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>查找一个数组的第K小的数，注意同样大小算一样大。 如 2 1 3 4 5 2 第三小数为3。</p>
+<span id="more"></span>
+
+<p><strong>输入描述:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入有多组数据。</span><br><span class="line">每组输入n，然后输入n个整数(1&lt;=n&lt;=1000)，再输入k。</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出描述:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输出第k小的整数。</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 1 3 5 2 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出</strong></p>
+<p><a href="javascript:void(0);"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h3><p>先排序，在找到第k小的数，对于大小相同的数由于已经完成了排序，所以遇到相同的数用一个while循环不断跳过就好</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//快速排序</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QuickSort</span><span class="params">(<span class="type">int</span>* a,<span class="type">int</span> low,<span class="type">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(low&gt;=high)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> flag=a[low],i=low,j=high;</span><br><span class="line">    <span class="keyword">while</span>(j&gt;i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(a[j]&gt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            j--;</span><br><span class="line">        <span class="keyword">while</span>(a[i]&lt;=flag&amp;&amp;j&gt;i)</span><br><span class="line">            i++;</span><br><span class="line">        <span class="keyword">if</span>(j&gt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">swap</span>(a[j],a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> temp=a[i];</span><br><span class="line">    a[i]=flag;</span><br><span class="line">    a[low]=temp;</span><br><span class="line">    <span class="built_in">QuickSort</span>(a,low,i<span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">QuickSort</span>(a,low+<span class="number">1</span>,high);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,num,k;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="type">int</span> a[n];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">QuickSort</span>(a,<span class="number">0</span>,n<span class="number">-1</span>);</span><br><span class="line">    cin&gt;&gt;k;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">  <span class="comment">//找到第k小的数</span></span><br><span class="line">    <span class="keyword">while</span>(k&gt;<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(a[i+<span class="number">1</span>]==a[i])</span><br><span class="line">            i++;</span><br><span class="line">        k--;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="解法2"><a href="#解法2" class="headerlink" title="解法2"></a>解法2</h3><p>用空间换时间，设置一个计数数组<code>count</code>,将输入数据<code>i</code>的位置的<code>count[i]</code>的数值设为1，寻找第k小的数就变成了在<code>count</code>中寻找第k个值为1的数组元素的下标大小，这样的时间复杂度仅有O(n)。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,num,k;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="type">int</span> count[<span class="number">1000</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;num;</span><br><span class="line">        count[num]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cin&gt;&gt;k;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(k&gt;<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        i++;</span><br><span class="line">        <span class="keyword">while</span>(count[i]!=<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        k--;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>矩阵n次幂</title>
+    <url>/2021/03/12/%E7%9F%A9%E9%98%B5n%E6%AC%A1%E5%B9%82/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个n*n的矩阵，求该矩阵的k次幂，即P^k。</p>
+<span id="more"></span>
+
+<h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一行：两个整数n（2&lt;=n&lt;=10）、k（1&lt;=k&lt;=5），两个数字之间用一个空格隔开，含义如上所示。</span><br><span class="line">接下来有n行，每行n个正整数，其中，第i行第j个整数表示矩阵中第i行第j列的矩阵元素Pij且（0&lt;=Pij&lt;=10）。另外，数据保证最后结果不会超过10^8。</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对于每组测试数据，输出其结果。格式为：</span><br><span class="line">n行n列个整数，每行数之间用空格隔开，注意，每行最后一个数后面不应该有多余的空格。</span><br></pre></td></tr></table></figure>
+
+<p>示例1</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 2</span><br><span class="line">9 8</span><br><span class="line">9 3</span><br><span class="line">3 3</span><br><span class="line">4 8 4</span><br><span class="line">9 3 0</span><br><span class="line">3 5 7</span><br><span class="line">5 2</span><br><span class="line">4 0 3 0 1</span><br><span class="line">0 0 5 8 5</span><br><span class="line">8 9 8 5 3</span><br><span class="line">9 6 1 7 8</span><br><span class="line">7 2 5 7 3</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">153 96</span><br><span class="line">108 81</span><br><span class="line">1216 1248 708</span><br><span class="line">1089 927 504</span><br><span class="line">1161 1151 739</span><br><span class="line">47 29 41 22 16</span><br><span class="line">147 103 73 116 94</span><br><span class="line">162 108 153 168 126</span><br><span class="line">163 67 112 158 122</span><br><span class="line">152 93 93 111 97</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>使用一个函数计算矩阵乘积的结果，再循环n次即为n次幂的结果。</p>
+<p><strong>遇到的问题</strong>：</p>
+<p>之前曾经遇到过，大半年没碰过代码了生疏了忘了，关于c语言中把二重数组作为函数参数，必须要指明行数，这是为啥呢？</p>
+<p>若是一维数组可以直接将<code>int* a</code>作为参数传递，因为这就直接指明了数组a的地址，而当使用多维数组时，若不指明每行的元素个数，编译器就无法得到每个元素的地址，也就无法完成编译，因此n维数组作为函数参数时需要指明n-1层的元素个数</p>
+<p><code>int *a[n-1][n-2]...[1]</code></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 10</span></span><br><span class="line"><span class="comment">//计算矩阵相乘的结果，存入第一个数组中</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MatrixMul</span><span class="params">(<span class="type">int</span> a[N][N],<span class="type">int</span> b[N][N],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> result[N][N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="comment">//O(n3)复杂度的求矩阵乘积结果</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;n;k++)</span><br><span class="line">            &#123;</span><br><span class="line">                result[i][j]+=a[i][k]*b[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//将结果拷贝入第一个参数的数组中</span></span><br><span class="line">    <span class="built_in">memcpy</span>(a,result,<span class="built_in">sizeof</span> (result));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//记录数组个数，数组维数，求的幂次数</span></span><br><span class="line">    <span class="type">int</span> n,dimention,power;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;dimention;</span><br><span class="line">        cin&gt;&gt;power;</span><br><span class="line">        <span class="type">int</span> a[N][N],result[N][N];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;dimention;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;dimention;k++)</span><br><span class="line">            &#123;</span><br><span class="line">                cin&gt;&gt;a[j][k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">memcpy</span>(result,a,<span class="built_in">sizeof</span> (a));</span><br><span class="line">        <span class="comment">//求power次幂</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;power;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">MatrixMul</span>(result,a,dimention);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将结果输出</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;dimention;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;dimention;k++)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;result[j][k]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>考研复试机试</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+</search>
