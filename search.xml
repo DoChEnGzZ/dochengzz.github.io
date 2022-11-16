@@ -515,4 +515,43 @@
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>滑动窗口</title>
+    <url>/2022/11/16/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</url>
+    <content><![CDATA[<h1 id="LeetCode笔记之滑动窗口题目"><a href="#LeetCode笔记之滑动窗口题目" class="headerlink" title="LeetCode笔记之滑动窗口题目"></a>LeetCode笔记之滑动窗口题目</h1><h2 id="滑动窗口一般做法"><a href="#滑动窗口一般做法" class="headerlink" title="滑动窗口一般做法"></a>滑动窗口一般做法</h2><p>滑动窗口题目常常在子数组、子字符串题目中出现，并且加以前缀最大、最小，目标是找到符合条件的最大最小子组合。</p>
+<p>接下来就开始介绍数组操作中另一个重要的方法：<strong>滑动窗口</strong>。</p>
+<p>所谓滑动窗口，<strong>就是不断的调节子序列的起始位置和终止位置，从而得出我们要想的结果</strong>。</p>
+<p>在暴力解法中，是一个for循环滑动窗口的起始位置，一个for循环为滑动窗口的终止位置，用两个for循环 完成了一个不断搜索区间的过程。</p>
+<p>那么滑动窗口如何用一个for循环来完成这个操作呢。</p>
+<p>首先要思考 如果用一个for循环，那么应该表示 滑动窗口的起始位置，还是终止位置。</p>
+<p>首先用两个指针<code>i</code>、<code>j</code>表示滑动窗口的的左窗口和右窗口，在一个for循环中，<strong>首先完成左窗口的左移</strong>，一般是判断当前窗口不符合条件再通过缩小窗口的左边界使窗口符合条件。再将右边界<code>j</code>++操作，扩充当前窗口大小。</p>
+<h2 id="题目参考"><a href="#题目参考" class="headerlink" title="题目参考"></a>题目参考</h2><p>[LeetCode3 无重复字符的最长字串](<a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串 - 力扣（LeetCode）</a>)</p>
+<blockquote>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+</blockquote>
+<p>一个队列,比如例题中的 abcabcbb，进入这个队列（窗口）为 abc 满足题目要求，当再进入 a，队列变成了 abca，这时候不满足要求。所以，我们要移动这个队列！</p>
+<p>我们只要把队列的左边的元素移出就行了，直到满足题目要求！</p>
+<p>一直维持这样的队列，找出队列出现最长的长度时候，求出解！</p>
+<p>时间复杂度：O(n) 遍历一遍字符串</p>
+<p>空间复杂度： O(n) 窗口大小，最坏情况下窗口大小等于整个字符串</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m Mid)</span></span> lengthOfLongestSubString(s <span class="type">string</span>) <span class="type">int</span> &#123;</span><br><span class="line">	m.Name = <span class="string">&quot;最大不重复子串&quot;</span></span><br><span class="line">    <span class="comment">//使用一个map保存已经出现的字符</span></span><br><span class="line">	substringMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">byte</span>]<span class="type">int</span>)</span><br><span class="line">	i := <span class="number">0</span></span><br><span class="line">	j := <span class="number">0</span></span><br><span class="line">	<span class="keyword">var</span> maxLen <span class="type">int</span> = <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(s) &lt;= <span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">len</span>(s)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> j &lt; <span class="built_in">len</span>(s) &#123;</span><br><span class="line">        <span class="comment">//缩减左边界，若当前右边界的字符已经在map中 存在则说明</span></span><br><span class="line">        <span class="comment">//至少有一个相同字符在窗口中，此时不断缩减左边界以确保窗口中没有重复字符</span></span><br><span class="line">		<span class="keyword">for</span> substringMap[s[j]] == <span class="number">1</span> &#123;</span><br><span class="line">			<span class="built_in">delete</span>(substringMap, s[i])</span><br><span class="line">			i++</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="comment">//获取最大长度</span></span><br><span class="line">		maxLen = <span class="type">int</span>(math.Max(<span class="type">float64</span>(maxLen), <span class="type">float64</span>(j-i+<span class="number">1</span>)))</span><br><span class="line">        <span class="comment">//扩充右边界</span></span><br><span class="line">		substringMap[s[j]] = <span class="number">1</span></span><br><span class="line">		j++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> maxLen</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://leetcode.cn/problems/minimum-window-substring/">LeetCode76最小覆盖字串</a></p>
+<blockquote>
+<p>给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 “” 。</p>
+<p>注意：</p>
+<p>对于 t 中重复字符，我们寻找的子字符串中该字符数量必须不少于 t 中该字符数量。<br>如果 s 中存在这样的子串，我们保证它是唯一的答案</p>
+</blockquote>
+<p>实例</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：s = &quot;ADOBECODEBANC&quot;, t = &quot;ABC&quot;</span><br><span class="line">输出：&quot;BANC</span><br></pre></td></tr></table></figure>
+</blockquote>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
 </search>
