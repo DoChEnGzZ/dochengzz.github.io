@@ -526,7 +526,7 @@
 <p>那么滑动窗口如何用一个for循环来完成这个操作呢。</p>
 <p>首先要思考 如果用一个for循环，那么应该表示 滑动窗口的起始位置，还是终止位置。</p>
 <p>首先用两个指针<code>i</code>、<code>j</code>表示滑动窗口的的左窗口和右窗口，在一个for循环中，<strong>首先完成左窗口的左移</strong>，一般是判断当前窗口不符合条件再通过缩小窗口的左边界使窗口符合条件。再将右边界<code>j</code>++操作，扩充当前窗口大小。</p>
-<h2 id="题目参考"><a href="#题目参考" class="headerlink" title="题目参考"></a>题目参考</h2><p>[LeetCode3 无重复字符的最长字串](<a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串 - 力扣（LeetCode）</a>)</p>
+<h2 id="题目参考"><a href="#题目参考" class="headerlink" title="题目参考"></a>题目参考</h2><p><a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串 - 力扣（LeetCode）</a></p>
 <blockquote>
 <p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
 </blockquote>
@@ -537,7 +537,7 @@
 <p>空间复杂度： O(n) 窗口大小，最坏情况下窗口大小等于整个字符串</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m Mid)</span></span> lengthOfLongestSubString(s <span class="type">string</span>) <span class="type">int</span> &#123;</span><br><span class="line">	m.Name = <span class="string">&quot;最大不重复子串&quot;</span></span><br><span class="line">    <span class="comment">//使用一个map保存已经出现的字符</span></span><br><span class="line">	substringMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">byte</span>]<span class="type">int</span>)</span><br><span class="line">	i := <span class="number">0</span></span><br><span class="line">	j := <span class="number">0</span></span><br><span class="line">	<span class="keyword">var</span> maxLen <span class="type">int</span> = <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(s) &lt;= <span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">len</span>(s)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> j &lt; <span class="built_in">len</span>(s) &#123;</span><br><span class="line">        <span class="comment">//缩减左边界，若当前右边界的字符已经在map中 存在则说明</span></span><br><span class="line">        <span class="comment">//至少有一个相同字符在窗口中，此时不断缩减左边界以确保窗口中没有重复字符</span></span><br><span class="line">		<span class="keyword">for</span> substringMap[s[j]] == <span class="number">1</span> &#123;</span><br><span class="line">			<span class="built_in">delete</span>(substringMap, s[i])</span><br><span class="line">			i++</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="comment">//获取最大长度</span></span><br><span class="line">		maxLen = <span class="type">int</span>(math.Max(<span class="type">float64</span>(maxLen), <span class="type">float64</span>(j-i+<span class="number">1</span>)))</span><br><span class="line">        <span class="comment">//扩充右边界</span></span><br><span class="line">		substringMap[s[j]] = <span class="number">1</span></span><br><span class="line">		j++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> maxLen</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://leetcode.cn/problems/minimum-window-substring/">LeetCode76最小覆盖字串</a></p>
+<p><a href="https://leetcode.cn/problems/minimum-window-substring/">76. 最小覆盖子串 - 力扣（LeetCode）</a></p>
 <blockquote>
 <p>给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 “” 。</p>
 <p>注意：</p>
