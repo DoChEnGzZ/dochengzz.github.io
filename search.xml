@@ -720,6 +720,7 @@
 <p>不允许修改 链表。</p>
 </blockquote>
 <p>示例1</p>
+<p><a href="https://postimg.cc/4K3qWH6T">Circle-List.png</a></p>
 <p><a href="https://postimg.cc/dk76LKJs"><img src="https://i.postimg.cc/k4spYnZb/circularlinkedlist.png" alt="circularlinkedlist.png" style="zoom:150%;" /></a></p>
 <blockquote>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：head = [3,2,0,-4], pos = 1</span><br><span class="line">输出：返回索引为 1 的链表节点</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br></pre></td></tr></table></figure>
