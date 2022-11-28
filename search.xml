@@ -811,4 +811,34 @@
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>链表</title>
+    <url>/2022/11/28/%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="链表题目"><a href="#链表题目" class="headerlink" title="链表题目"></a>链表题目</h1><p>什么是链表，链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。</p>
+<p>链表的入口节点称为链表的头结点也就是head。</p>
+<span id="more"></span>
+
+<h2 id="链表的类型"><a href="#链表的类型" class="headerlink" title="链表的类型"></a><strong>链表的类型</strong></h2><p><strong>单链表</strong></p>
+<p><a href="https://postimg.cc/t78YDp3Y"><img src="https://i.postimg.cc/xT1Mfdqy/List.png" alt="List.png" style="zoom:200%;" /></a></p>
+<p>双链表</p>
+<p>单链表中的指针域只能指向节点的下一个节点。</p>
+<p>双链表：每一个节点有两个指针域，一个指向下一个节点，一个指向上一个节点。</p>
+<p>双链表 既可以向前查询也可以向后查询。</p>
+<p>循环链表</p>
+<p>循环链表，顾名思义，就是链表首尾相连。</p>
+<p>循环链表可以用来解决约瑟夫环问题</p>
+<h2 id="链表题目-1"><a href="#链表题目-1" class="headerlink" title="链表题目"></a>链表题目</h2><p><a href="https://leetcode.cn/problems/reverse-linked-list/">206. 反转链表 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给你单链表的头节点 <code>head</code> ，请你反转链表，并返回反转后的链表。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
 </search>
