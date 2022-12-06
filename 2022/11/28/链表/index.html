@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://i.postimg.cc/xT1Mfdqy/List.png">
 <meta property="og:image" content="https://i.postimg.cc/HxZ4dLRr/swap-ex1.jpg">
 <meta property="article:published_time" content="2022-11-28T02:57:34.000Z">
-<meta property="article:modified_time" content="2022-11-28T08:52:57.292Z">
+<meta property="article:modified_time" content="2022-11-28T12:04:11.469Z">
 <meta property="article:author" content="dochengzz">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -216,7 +216,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-11-28 10:57:34 / 修改时间：16:52:57" itemprop="dateCreated datePublished" datetime="2022-11-28T10:57:34+08:00">2022-11-28</time>
+              <time title="创建时间：2022-11-28 10:57:34 / 修改时间：20:04:11" itemprop="dateCreated datePublished" datetime="2022-11-28T10:57:34+08:00">2022-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,6 +282,7 @@
 <p><strong>递归的边界</strong></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swapPairs</span><span class="params">(head *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">	cur := head</span><br><span class="line">    <span class="comment">//递归边界</span></span><br><span class="line">	<span class="keyword">if</span> cur == <span class="literal">nil</span> || cur.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> head</span><br><span class="line">	&#125;</span><br><span class="line">	next := cur.Next</span><br><span class="line">	temp := next.Next</span><br><span class="line">	next = cur.Next</span><br><span class="line">	next.Next = cur</span><br><span class="line">    <span class="comment">//判断存不存在后续</span></span><br><span class="line">	<span class="keyword">if</span> temp != <span class="literal">nil</span> &#123;</span><br><span class="line">		cur.Next = swapPairs(temp)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		cur.Next = temp</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">return</span> next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>链表的其他题目可与参考双指针的一些题目，包括环形链表、删除链表倒数第n个元素等等。</p>
 
     </div>
 
@@ -303,7 +304,10 @@
     <a href="/2022/11/22/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="prev" title="双指针法">
       <i class="fa fa-chevron-left"></i> 双指针法
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/06/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="next" title="栈和队列">
+      栈和队列 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -379,7 +383,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
