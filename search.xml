@@ -931,4 +931,19 @@
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>查询当前电脑tcp端口占用</title>
+    <url>/2022/12/08/%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E7%94%B5%E8%84%91tcp%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="查询电脑当前tcp端口占用情况"><a href="#查询电脑当前tcp端口占用情况" class="headerlink" title="查询电脑当前tcp端口占用情况"></a>查询电脑当前tcp端口占用情况</h1><p>最近打开Golang、Godot的时候经常会出现莫名奇妙的端口占用，记一条常用的pwsh命令。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">netsh interface ipv4 show excludedportrange protocol=tcp</span><br><span class="line">netsh interface ipv4 show excludedportrange protocol=udp</span><br></pre></td></tr></table></figure>
+
+<p>下次一定记得解决，我的PC从3000-5000几乎都被占满了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>小技巧</tag>
+      </tags>
+  </entry>
 </search>
