@@ -865,6 +865,12 @@
 <p>队列</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> queue <span class="keyword">struct</span> &#123;</span><br><span class="line">	nums []<span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newQueue</span><span class="params">()</span></span> *queue &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;queue&#123;</span><br><span class="line">		nums: <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>),</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *queue)</span></span> enQueue(num <span class="type">int</span>) &#123;</span><br><span class="line">	q.nums = <span class="built_in">append</span>(q.nums, num)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *queue)</span></span> deQueue() <span class="type">int</span> &#123;</span><br><span class="line">	num := q.nums[<span class="number">0</span>]</span><br><span class="line">	q.nums = q.nums[<span class="number">1</span>:]</span><br><span class="line">	<span class="keyword">return</span> num</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *queue)</span></span> isEmpty() <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(q.nums) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>go中堆的实现</p>
+<p>堆的实现必须先实现len、Less、Swap、Push、Pop这4个接口的方法。其中，后两方法必须以指针实现，前面三种则不需要。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> IntHeap []<span class="type">int</span></span><br><span class="line"><span class="comment">//继承heap类必须实现Len、Less、Swap、Push、Pop四种方法。其中</span></span><br><span class="line"><span class="comment">//Less方法决定了为大顶堆还是小顶堆</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(h) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> h[i] &lt; h[j] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h IntHeap)</span></span> Swap(i, j <span class="type">int</span>)      &#123; h[i], h[j] = h[j], h[i] &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *IntHeap)</span></span> Push(x <span class="keyword">interface</span>&#123;&#125;) &#123;</span><br><span class="line">        *h = <span class="built_in">append</span>(*h, x.(<span class="type">int</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *IntHeap)</span></span> Pop() <span class="keyword">interface</span>&#123;&#125; &#123;</span><br><span class="line">        old := *h</span><br><span class="line">        n := <span class="built_in">len</span>(old)</span><br><span class="line">        x := old[n<span class="number">-1</span>]</span><br><span class="line">        *h = old[<span class="number">0</span> : n<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//示例用法</span></span><br><span class="line">        h := &amp;IntHeap&#123;<span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>&#125;</span><br><span class="line"><span class="comment">//初始化为堆</span></span><br><span class="line">        heap.Init(h)</span><br><span class="line">        heap.Push(h, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://leetcode.cn/problems/implement-queue-using-stacks/">232. 用栈实现队列 - 力扣（LeetCode）</a></p>
 <blockquote>
 <p>请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（push、pop、peek、empty）：</p>
@@ -923,6 +929,23 @@
 <p>有了这两种排序方法之后，我们就可以很方便的解决这道题了，首先获取每个元素出现的次数统计<code>countMap</code>，然后根据统计次数即对map进行排序，最后返回排序完的前k个元素即可。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">topKFrequent</span><span class="params">(nums []<span class="type">int</span>, k <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> result []<span class="type">int</span></span><br><span class="line">	countMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">int</span>]<span class="type">int</span>)</span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">		countMap[v]++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> k, _ := <span class="keyword">range</span> countMap &#123;</span><br><span class="line">		result = <span class="built_in">append</span>(result, k)</span><br><span class="line">	&#125;</span><br><span class="line">	sort.Slice(result, <span class="function"><span class="keyword">func</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> countMap[result[a]] &gt; countMap[result[b]]</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> result[:k]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><a href="https://leetcode.cn/problems/sliding-window-maximum/">239. 滑动窗口最大值 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回 滑动窗口中的最大值 。</p>
+<p>示例1：</p>
+<p>输入：nums = [1,3,-1,-3,5,3,6,7], k = 3<br>输出：[3,3,5,5,6,7]<br>解释：<br>滑动窗口的位置                最大值</p>
+<hr>
+<p>[1  3  -1] -3  5  3  6  7       3<br> 1 [3  -1  -3] 5  3  6  7       3<br> 1  3 [-1  -3  5] 3  6  7       5<br> 1  3  -1 [-3  5  3] 6  7       5<br> 1  3  -1  -3 [5  3  6] 7       6<br> 1  3  -1  -3  5 [3  6  7]      7</p>
+</blockquote>
+<p>经典hard难度的题目。在一个给定的窗口中，得出一个最大值，并且这个窗口是会移动的，很容易想到用大顶堆去做这个题目。每次移动窗口，都是将窗口右边的新元素加入大顶堆中，但是窗口左边的元素是一件非常难处理的事。因为大顶堆的堆顶永远都是最大的元素，每次从堆顶去除的元素只能是最大的元素，而不能每次准确的去除窗口最左边出窗口的那个元素。这里我看了题解，才想到可以用数组下标作为堆中的元素。只要把排序规则改成根据下标去数组中获取元素就可以了。然后每次窗口移动的时候，判断堆顶元素即最大元素的坐标，如果最大元素的坐标在窗口左边以外，则说明可以去除这个元素了。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> hp <span class="keyword">struct</span> &#123;</span><br><span class="line">	heaps []<span class="type">int</span></span><br><span class="line">	a     []<span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Len() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(h.heaps)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Swap(i, j <span class="type">int</span>) &#123;</span><br><span class="line">	h.heaps[i], h.heaps[j] = h.heaps[j], h.heaps[i]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// heap中元素为下标，用下标对应数组中值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h.a[h.heaps[i]] &gt; h.a[h.heaps[j]]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Push(x <span class="keyword">interface</span>&#123;&#125;) &#123;</span><br><span class="line">	h.heaps = <span class="built_in">append</span>(h.heaps, x.(<span class="type">int</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Pop() <span class="keyword">interface</span>&#123;&#125; &#123;</span><br><span class="line">	temp := h.heaps</span><br><span class="line">	n := h.heaps[<span class="built_in">len</span>(temp)<span class="number">-1</span>]</span><br><span class="line">	h.heaps = temp[:<span class="built_in">len</span>(temp)<span class="number">-1</span>]</span><br><span class="line">	<span class="keyword">return</span> n</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Top() <span class="keyword">interface</span>&#123;&#125; &#123;</span><br><span class="line">	<span class="keyword">return</span> h.heaps[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxSlidingWindow</span><span class="params">(nums []<span class="type">int</span>, k <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	result := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>)</span><br><span class="line">	h := &amp;hp&#123;</span><br><span class="line">		a:     nums,</span><br><span class="line">		heaps: <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>)&#125;</span><br><span class="line">	<span class="comment">//初始化堆</span></span><br><span class="line">	heap.Init(h)</span><br><span class="line">	<span class="comment">//将0~k的下标放入堆中，堆的排序规则为对应下标的值大小</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; k; i++ &#123;</span><br><span class="line">		heap.Push(h, i)</span><br><span class="line">	&#125;</span><br><span class="line">	result = <span class="built_in">append</span>(result, nums[h.Top().(<span class="type">int</span>)])</span><br><span class="line">	<span class="comment">//开始滑动窗口</span></span><br><span class="line">	<span class="keyword">for</span> i := k; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">		heap.Push(h, i)</span><br><span class="line">		<span class="comment">//如果当前堆顶下标————即最大值位于当前窗口i-k+1左侧，说明得将堆顶元素弹出</span></span><br><span class="line">		<span class="keyword">if</span> h.Top().(<span class="type">int</span>) &lt;= i-k &#123;</span><br><span class="line">			heap.Pop(h)</span><br><span class="line">		&#125;</span><br><span class="line">		result = <span class="built_in">append</span>(result, nums[h.Top().(<span class="type">int</span>)])</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第二种方法是自己构造一个单调队列。这是一个只适用于本体的队列，具体规则如下：</p>
+<ul>
+<li>出队列：只将队列出口的元素出</li>
+<li>入队列：如果入队元素</li>
+</ul>
 ]]></content>
       <categories>
         <category>LeetCode</category>
@@ -937,13 +960,47 @@
     <content><![CDATA[<h1 id="查询电脑当前tcp端口占用情况"><a href="#查询电脑当前tcp端口占用情况" class="headerlink" title="查询电脑当前tcp端口占用情况"></a>查询电脑当前tcp端口占用情况</h1><p>最近打开Golang、Godot的时候经常会出现莫名奇妙的端口占用，记一条常用的pwsh命令。</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">netsh interface ipv4 show excludedportrange protocol=tcp</span><br><span class="line">netsh interface ipv4 show excludedportrange protocol=udp</span><br></pre></td></tr></table></figure>
 
-<p>下次一定记得解决，我的PC从3000-5000几乎都被占满了。</p>
+<p>下次一定记得解决，我的PC从3000-5000几乎都被占满了。redis服务根本启动不了 </p>
+<p>查询当前端口号是哪个进程在占用，这条命令可以查到占用端口号进程的准确PID，但是只获得了PID还无法准确的获得指定的进程，需要在任务管理器里的详细信息中找到PID对应的进程。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">netstat <span class="literal">-ano</span>|findstr <span class="string">&quot;端口号&quot;</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
         <tag>小技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>瘟疫传说无罪评测</title>
+    <url>/2022/12/17/%E7%98%9F%E7%96%AB%E4%BC%A0%E8%AF%B4%E9%95%87%E9%AD%82%E6%9B%B2%E8%AF%84%E6%B5%8B/</url>
+    <content><![CDATA[<h1 id="瘟疫传说-无罪"><a href="#瘟疫传说-无罪" class="headerlink" title="瘟疫传说 无罪"></a>瘟疫传说 无罪</h1><blockquote>
+<p>瘟疫传说安魂曲。它是一款由瑞典开发商Frictional Games制作的恐怖游戏。游戏中，玩家扮演一名旅行者，在一个被瘟疫所困扰的小镇中寻找逃生之路。游戏以其紧张的氛围和深刻的情感效果而闻名，并获得了广泛的好评。</p>
+</blockquote>
+<p>以上介绍来自下OpenAI的ChatGPT，用它写博客可以省很多字。</p>
+<p>这游戏是我在xgp上玩的，第一个月花了8块钱，结果因为中间完全玩不下去，xgp过期了都没看到，导致第二个月自动续费花了28，直接血亏，强忍着玩下去发现后期比前期好玩很多。</p>
+<p>当游戏到达中后期，尤其是阿米西亚和米果和父母告别，上了岛之后的剧情、风景、人物塑造都很成功，也没有前面的剧情节奏拖沓、玩法无聊的问题了，最后结局也是居然在我意料之外。</p>
+<p>因为没玩一代镇魂曲，我只能说前期就像一个升级的一代，可能中后期开始才更好一点。</p>
+<p>下面先讲讲这个游戏的优点和缺点：</p>
+<span id="more"></span>
+
+<h2 id="出色的画质"><a href="#出色的画质" class="headerlink" title="出色的画质"></a>出色的画质</h2><p>最早听说这个游戏并且开XGP玩的原因就是很多人吹这个游戏的画质，真正给人一种次世代的感觉。真正上手之后发现确实如此，也确实很吃显卡。正好试试我的2080能到什么级别的画质。</p>
+<p>这个游戏我只能开到2k全最高，光追只开最初级的光追，能够稳定60帧，但是在这种情况下环境的材质、人物的建模、光影效果也已经非常出色了。</p>
+<p><a href="https://postimg.cc/9DdpkwpL"><img src="https://i.postimg.cc/jS9FLzJY/A-Plague-Tale-Requiem-Windows-18-10-2022-4-26-17.png" alt="A-Plague-Tale-Requiem-Windows-18-10-2022-4-26-17.png"></a></p>
+<p>出色的美丽远景，据说这个游戏的远景不是贴图，是真实的建模，难怪显卡压力那么大</p>
+<p><a href="https://postimg.cc/xX65vJ3h"><img src="https://i.postimg.cc/5tVrM8Y4/A-Plague-Tale-Requiem-Windows-19-10-2022-8-26-40.png" alt="A-Plague-Tale-Requiem-Windows-19-10-2022-8-26-40.png"></a></p>
+<p>优秀的人物建模，皮肤非常细致,女主阿米西亚非常好看</p>
+<p><a href="https://postimg.cc/34pBpLRJ"><img src="https://i.postimg.cc/3RfbsVQp/A-Plague-Tale-Requiem-Windows-18-10-2022-4-16-03.png" alt="A-Plague-Tale-Requiem-Windows-18-10-2022-4-16-03.png"></a></p>
+<p>印象最深刻的就是植物的建模，面数非常多，看起来完全没有其它游戏中植物片面的感觉</p>
+<h2 id="美术设计"><a href="#美术设计" class="headerlink" title="美术设计"></a>美术设计</h2><p>其实我不是很在意游戏的画质，反而更在意游戏的美术设计。无罪这款游戏前10章左右问题比较明显。因为游戏集中在一座城的大陆上，感觉大部分建筑、植物都复用的素材，尤其是每一小关的游戏边界都是以开门关门的方式实现的，敌人的服装也是几乎完全相同，种类也非常稀少。</p>
+<p>但是在游戏进入海岛普罗旺斯上之后可以明显的感觉到游戏的美术设计水平有了质的飞跃。主角姐妹二人上岛的时机是游戏中岛上举办光明节，岛上的城镇里到处洒满了鲜花，非常美丽。姐妹二人上岛之后跟随梦境找到地下遗迹，见到上一任马库拉携者的遗体的地方，狰狞的建筑设计让人印象深刻。有种黑魂3环印城中间地下遗迹的味道。最后雨果在马赛释放马库拉的地方，也是让人难以忘怀。</p>
+<h2 id="玩法设计"><a href="#玩法设计" class="headerlink" title="玩法设计"></a>玩法设计</h2>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>游戏测评</tag>
       </tags>
   </entry>
 </search>
