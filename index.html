@@ -185,6 +185,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/16/%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/avator.jpg">
+      <meta itemprop="name" content="dochengzz">
+      <meta itemprop="description" content="coding and reading">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dochengzz的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/16/%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/" class="post-title-link" itemprop="url">非递归实现二叉树前中后序遍历</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-16 15:48:58" itemprop="dateCreated datePublished" datetime="2023-02-16T15:48:58+08:00">2023-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-18 21:06:55" itemprop="dateModified" datetime="2023-02-18T21:06:55+08:00">2023-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/02/16/%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/16/%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="非递归实现二叉树前中后序遍历"><a href="#非递归实现二叉树前中后序遍历" class="headerlink" title="非递归实现二叉树前中后序遍历"></a>非递归实现二叉树前中后序遍历</h1><p>递归实现前中后序遍历，实在是太简单了，需要注意的就是在函数里面定义函数不能 单纯的通过函数名:=的方式来定义。因为要递归，就会出现编译的时候发现未定义的函数。所以要先用var来定义一个函数变量再声明这个函数。</p>
+<p>而非递归实现遍历，必须需要栈的支持。当按深度优先遍历二叉树的时候，把二叉树的每个节点放入栈中。需要根据需要的顺序从栈中取出结果即可</p>
+<h2 id="前-后序遍历"><a href="#前-后序遍历" class="headerlink" title="前/后序遍历"></a>前/后序遍历</h2><p>最简单，放在最前面说，由于前序遍历后后序遍历中，只需要将根节点最先输出或者最后输出即可。</p>
+<p>前序遍历的顺序是中左右，所以程序的顺序是这样的：</p>
+<ol>
+<li>将栈顶元素出栈，中</li>
+<li>若出栈元素右子树不为空，将其入栈，</li>
+<li>若出栈元素左子树不为空，将其入栈，这样入的时候顺序是右左，出的时候顺序就是左右，实现了中左右的顺序。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">preorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    stack=<span class="built_in">append</span>(stack,root)</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>&#123;</span><br><span class="line">        node:=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        result=<span class="built_in">append</span>(result,node.Val)</span><br><span class="line">        <span class="keyword">if</span> node.Right!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Left!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而实现后续遍历就很简单了，只要实现中右左的遍历再将结果切片逆转就可以实现后续遍历的左右中。</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/v1NnX7MH"><img src="https://i.postimg.cc/26zxkTKv/Traver-Tree.png" alt="Traver-Tree.png"></a></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">postorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    stack=<span class="built_in">append</span>(stack,root)</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>&#123;</span><br><span class="line">        node:=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        result=<span class="built_in">append</span>(result,node.Val)</span><br><span class="line">        <span class="keyword">if</span> node.Left!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Right!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//由于go中没有反转切片的函数，只能手写首位置换</span></span><br><span class="line">    <span class="keyword">for</span> i,j:=<span class="number">0</span>,<span class="built_in">len</span>(result)<span class="number">-1</span>;i&lt;j;&#123;</span><br><span class="line">        temp:=result[j]</span><br><span class="line">        result[j]=result[i]</span><br><span class="line">        result[i]=temp</span><br><span class="line">        i++</span><br><span class="line">        j--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><p>中序遍历明显要比前/后序遍历要复杂一点。因为后两者在深度遍历将节点放入栈中时，简单的将每颗子树的父节点元素输出即可，而由于中序遍历的顺序是左中右的顺序，这就出现了先要输出最左叶子节点的问题。</p>
+<p>所以我们需要一个节点cur去遍历整颗树，记录这个节点的状况，流程如下：</p>
+<ol>
+<li>cur有左子树，将左子树放入栈中，cur=cur.left，这一步无限进行，为了将最左子节点先遍历到，这是在中序遍历中最先输出的节点。回到1</li>
+<li>若cur无左子树，则在左中右的顺序中，说明应该输出中了，即cur本身。此时输出cur，再遍历右子树，</li>
+<li>cur有右子树，将右子树放入栈中，cur=cur.right，回到1</li>
+<li>若cur无右子树，则说明当前节点是叶子节点，将上个元素出栈，cur=stack.pop，此时cur变为父节点，回退。</li>
+</ol>
+<p>将这个流程简化，可以得到一个流程：</p>
+<ol>
+<li>cur不为空，将cur左子树放入栈中，回到1</li>
+<li>cur为空，将栈顶元素弹出，cur=stack.pop，此时cur变为父节点,输出cur。再将cur的右子树加入栈中，回到1。这样不管是左子树为空还是右子树为空都会回到这个地方，都为空就是叶子节点。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">inorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    cur:=root</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>||cur!=<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> cur!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,cur)</span><br><span class="line">            cur=cur.Left</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cur=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">            stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">            result=<span class="built_in">append</span>(result,cur.Val)</span><br><span class="line">            cur=cur.Right</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/17/%E7%98%9F%E7%96%AB%E4%BC%A0%E8%AF%B4%E9%95%87%E9%AD%82%E6%9B%B2%E8%AF%84%E6%B5%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +333,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-15 11:49:31" itemprop="dateModified" datetime="2023-01-15T11:49:31+08:00">2023-01-15</time>
+                <time title="修改时间：2023-02-13 23:33:43" itemprop="dateModified" datetime="2023-02-13T23:33:43+08:00">2023-02-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1032,95 +1149,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/assets/avator.jpg">
-      <meta itemprop="name" content="dochengzz">
-      <meta itemprop="description" content="coding and reading">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dochengzz的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">git常用命令记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-07 16:24:18 / 修改时间：16:37:54" itemprop="dateCreated datePublished" datetime="2021-04-07T16:24:18+08:00">2021-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>简易版git使用指南，记性太差老是忘记这些命令又要重新查，所以记在自己博客里方便查看。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/07/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1192,7 +1220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

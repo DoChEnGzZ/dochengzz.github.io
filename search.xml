@@ -1000,13 +1000,56 @@
 <p>从这个设计可以看出，游戏设计人员希望给玩家更少的资源、手段去对抗敌人，反而更加鼓励玩家潜行、收集资源，而不是像传统游戏的击杀敌人。这种设计萝卜白菜各有所爱吧，但是前期确实玩着憋屈，毕竟我玩的不是末日丧尸生存类游戏，让我那么难干嘛呢。</p>
 <p>然后就是这个游戏缺少boss战的设计，前作镇魂曲是有类似黑魂这种传统boss战的，这作只有几次追逐战，而且玩起来很单调。</p>
 <p>另一个主要玩法是解谜，就是利用游戏中的几种元素火、灭火剂、元息等等来躲避鼠潮，这是游戏中最吸引人的地方。然而前期的解谜谜题也存在难度低、一眼看到的东西就是你需要去触发这种问题。不过在中期离开第一座城之后，解谜难度就获得了大量的提升，当你拥有的工具和元素种类多起来之后，解谜就变得有意思起来了。甚至很多场景都拥有多种解决办法，这完全取决于你的想法。</p>
-<h2 id="剧情设计"><a href="#剧情设计" class="headerlink" title="剧情设计"></a>剧情设计</h2><p>如果说瘟疫传说无罪这款游戏的前期玩法和美术设计也仅仅比答辩好一点点的话</p>
-]]></content>
+<h2 id="剧情设计"><a href="#剧情设计" class="headerlink" title="剧情设计"></a>剧情设计</h2><p>如果说瘟疫传说无罪这款游戏的前期玩法和美术设计也仅仅比答辩好一点点的话,游戏的剧情可以说是为这款游戏添色不少。</p>
+<h4 id="故事背景"><a href="#故事背景" class="headerlink" title="故事背景"></a>故事背景</h4><p>游戏的剧情紧扣无罪这个主题，弟弟米果这个角色，天生作为马库拉的携者，即一种诅咒，会招来鼠灾，由于携者基本都是小孩子，所以马库拉的携者都会有一个保护者，本作中主角的保护者是米果的姐姐阿米西亚。这就有一种宿命论的感觉，因为游戏中曾经出现了上一任携者和保护者，也是一对小男孩和一个大女孩。携者天生会招来大量的老鼠，甚至引起巨大的灾变，在游戏中就有上一任携者引发的巨大</p>
+<h4 id="角色塑造"><a href="#角色塑造" class="headerlink" title="角色塑造"></a>角色塑造</h4><p>主角的母亲是炼金协会的一员。炼金协会这个组织很早就</p>
+<h4 id="亲人感情选择"><a href="#亲人感情选择" class="headerlink" title="亲人感情选择"></a>亲人感情选择</h4><h4 id="关于无罪的主题"><a href="#关于无罪的主题" class="headerlink" title="关于无罪的主题"></a>关于无罪的主题</h4>]]></content>
       <categories>
         <category>随笔</category>
       </categories>
       <tags>
         <tag>游戏测评</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>非递归实现二叉树前中后序遍历</title>
+    <url>/2023/02/16/%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<h1 id="非递归实现二叉树前中后序遍历"><a href="#非递归实现二叉树前中后序遍历" class="headerlink" title="非递归实现二叉树前中后序遍历"></a>非递归实现二叉树前中后序遍历</h1><p>递归实现前中后序遍历，实在是太简单了，需要注意的就是在函数里面定义函数不能 单纯的通过函数名:=的方式来定义。因为要递归，就会出现编译的时候发现未定义的函数。所以要先用var来定义一个函数变量再声明这个函数。</p>
+<p>而非递归实现遍历，必须需要栈的支持。当按深度优先遍历二叉树的时候，把二叉树的每个节点放入栈中。需要根据需要的顺序从栈中取出结果即可</p>
+<h2 id="前-后序遍历"><a href="#前-后序遍历" class="headerlink" title="前/后序遍历"></a>前/后序遍历</h2><p>最简单，放在最前面说，由于前序遍历后后序遍历中，只需要将根节点最先输出或者最后输出即可。</p>
+<p>前序遍历的顺序是中左右，所以程序的顺序是这样的：</p>
+<ol>
+<li>将栈顶元素出栈，中</li>
+<li>若出栈元素右子树不为空，将其入栈，</li>
+<li>若出栈元素左子树不为空，将其入栈，这样入的时候顺序是右左，出的时候顺序就是左右，实现了中左右的顺序。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">preorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    stack=<span class="built_in">append</span>(stack,root)</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>&#123;</span><br><span class="line">        node:=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        result=<span class="built_in">append</span>(result,node.Val)</span><br><span class="line">        <span class="keyword">if</span> node.Right!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Left!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而实现后续遍历就很简单了，只要实现中右左的遍历再将结果切片逆转就可以实现后续遍历的左右中。</p>
+<p><a href="https://postimg.cc/v1NnX7MH"><img src="https://i.postimg.cc/26zxkTKv/Traver-Tree.png" alt="Traver-Tree.png"></a></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">postorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    stack=<span class="built_in">append</span>(stack,root)</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>&#123;</span><br><span class="line">        node:=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        result=<span class="built_in">append</span>(result,node.Val)</span><br><span class="line">        <span class="keyword">if</span> node.Left!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Right!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//由于go中没有反转切片的函数，只能手写首位置换</span></span><br><span class="line">    <span class="keyword">for</span> i,j:=<span class="number">0</span>,<span class="built_in">len</span>(result)<span class="number">-1</span>;i&lt;j;&#123;</span><br><span class="line">        temp:=result[j]</span><br><span class="line">        result[j]=result[i]</span><br><span class="line">        result[i]=temp</span><br><span class="line">        i++</span><br><span class="line">        j--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><p>中序遍历明显要比前/后序遍历要复杂一点。因为后两者在深度遍历将节点放入栈中时，简单的将每颗子树的父节点元素输出即可，而由于中序遍历的顺序是左中右的顺序，这就出现了先要输出最左叶子节点的问题。</p>
+<p>所以我们需要一个节点cur去遍历整颗树，记录这个节点的状况，流程如下：</p>
+<ol>
+<li>cur有左子树，将左子树放入栈中，cur=cur.left，这一步无限进行，为了将最左子节点先遍历到，这是在中序遍历中最先输出的节点。回到1</li>
+<li>若cur无左子树，则在左中右的顺序中，说明应该输出中了，即cur本身。此时输出cur，再遍历右子树，</li>
+<li>cur有右子树，将右子树放入栈中，cur=cur.right，回到1</li>
+<li>若cur无右子树，则说明当前节点是叶子节点，将上个元素出栈，cur=stack.pop，此时cur变为父节点，回退。</li>
+</ol>
+<p>将这个流程简化，可以得到一个流程：</p>
+<ol>
+<li>cur不为空，将cur左子树放入栈中，回到1</li>
+<li>cur为空，将栈顶元素弹出，cur=stack.pop，此时cur变为父节点,输出cur。再将cur的右子树加入栈中，回到1。这样不管是左子树为空还是右子树为空都会回到这个地方，都为空就是叶子节点。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">inorderTraversal</span><span class="params">(root *TreeNode)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    result:=<span class="built_in">make</span>([]<span class="type">int</span>,<span class="number">0</span>)</span><br><span class="line">    stack:=<span class="built_in">make</span>([]*TreeNode,<span class="number">0</span>)</span><br><span class="line">    cur:=root</span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack)!=<span class="number">0</span>||cur!=<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> cur!=<span class="literal">nil</span>&#123;</span><br><span class="line">            stack=<span class="built_in">append</span>(stack,cur)</span><br><span class="line">            cur=cur.Left</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cur=stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">            stack=stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">            result=<span class="built_in">append</span>(result,cur.Val)</span><br><span class="line">            cur=cur.Right</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
