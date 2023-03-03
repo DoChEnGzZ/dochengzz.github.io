@@ -1101,6 +1101,23 @@
 <p>另一个办法是利用搜索二叉树的性质，二叉树中序遍历的时候得到的结果是升序的。这样我们可以用中序遍历的方法，判断每次中序遍历的上一个节点的值必须大于当前节点的值。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isValidBST</span><span class="params">(root *TreeNode)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    stack := []*TreeNode&#123;&#125;</span><br><span class="line">    inorder := math.MinInt64</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span> || root != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> root != <span class="literal">nil</span> &#123;</span><br><span class="line">            stack = <span class="built_in">append</span>(stack, root)</span><br><span class="line">            root = root.Left</span><br><span class="line">        &#125;</span><br><span class="line">        root = stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> root.Val &lt;= inorder &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;、</span><br><span class="line">        <span class="comment">//此处的inorder值就是结果</span></span><br><span class="line">        inorder = root.Val</span><br><span class="line">        root = root.Right</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<h3 id="二叉树的最近公共祖先"><a href="#二叉树的最近公共祖先" class="headerlink" title="二叉树的最近公共祖先"></a>二叉树的最近公共祖先</h3><p><a href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/">236. 二叉树的最近公共祖先 - 力扣（LeetCode）</a></p>
+<p>一道经典题目，首先看到就先想到递归的方法，因为找两个节点的祖先是可以让左右子树继续去找的。这样就首先需要解决3个问题</p>
+<ol>
+<li>递归的顺序，前中后？</li>
+<li>递归的边界</li>
+<li>递归的返回值，我该怎么养才能知道我的左右子树返回的结果是否包含了要求的两个节点还是只是两个节点种的一个?</li>
+</ol>
+<p>首先解决第一个问题，使用后序遍历。因为这题我们需要先看左右子树的结果再对结果进行判断，所以应该使用后序遍历。</p>
+<p>第二个问题，递归的边界，什么时候返回？首先遇到空节点肯定返回，其次是遇到目标节点p、q。这需要和第三个问题放在一起考虑。我们可以这么设计：</p>
+<p>核心概念：返回null说明p、q不在其中，返回p、q说明只有一个p、q在树中，返回一个其他值说明他是父节点。</p>
+<ul>
+<li>当左右子树返回值为p或q时，另一个为null，说明p或q在左右子树中</li>
+<li>当左右子树均有返回值时，不论是否为q则返回当前节点本身，说明当前节点时两个节点的父节点之一</li>
+<li>有没有可能出现一个返回值为p或q一个为root的情况？不可能，二叉树中只有两个p、q。如果返回的不为p、q则说明他是pq的一个父节点，而又出现一个pq在另一个子树上，这是矛盾的。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">func</span> <span class="title">lowestCommonAncestor</span><span class="params">(root, p, q *TreeNode)</span></span> *TreeNode &#123;</span><br><span class="line">     <span class="comment">//如果当前节点为p、q返回当前节点</span></span><br><span class="line">    <span class="keyword">if</span> root==<span class="literal">nil</span>||root==p||root==q&#123;</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    &#125;</span><br><span class="line">    left:=lowestCommonAncestor(root.Left,p,q)</span><br><span class="line">    right:=lowestCommonAncestor(root.Right,p,q)</span><br><span class="line">    <span class="keyword">if</span> left!=<span class="literal">nil</span>&amp;&amp;right!=<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> left!=<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> right!=<span class="literal">nil</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> right</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>LeetCode</category>
